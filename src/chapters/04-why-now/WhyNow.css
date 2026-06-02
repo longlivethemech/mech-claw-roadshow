@@ -1,0 +1,322 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 04 · why-now — prefix .wn-  (拐点·双曲线 / 下放家庭级 / ¥300 流程 / 王弢金句)
+ * ════════════════════════════════════════════════════════════════════ */
+
+.wn-root { position: absolute; inset: 0; overflow: hidden; }
+.wn-em { color: var(--accent); font-style: normal; }
+
+/* stacking: ambient behind, scenes above */
+.wn-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.wn-root > .scene-fade { z-index: 2; }
+
+/* ───────── 持续氛围 · 缓慢上浮暖尘 + 极淡网格 ───────── */
+.wn-spark {
+  position: absolute;
+  bottom: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 188, 110, 0.85) 0%, transparent 70%);
+  opacity: 0;
+  animation-name: wn-rise-dust;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes wn-rise-dust {
+  0%   { transform: translateY(0) scale(0.7); opacity: 0; }
+  14%  { opacity: 0.42; }
+  82%  { opacity: 0.26; }
+  100% { transform: translateY(-1160px) translateX(30px) scale(1); opacity: 0; }
+}
+.wn-spark-0 { left: 11%; width: 5px; height: 5px; animation-duration: 22s; animation-delay: -2s;  }
+.wn-spark-1 { left: 23%; width: 4px; height: 4px; animation-duration: 27s; animation-delay: -9s;  }
+.wn-spark-2 { left: 34%; width: 6px; height: 6px; animation-duration: 20s; animation-delay: -14s; }
+.wn-spark-3 { left: 46%; width: 4px; height: 4px; animation-duration: 25s; animation-delay: -5s;  }
+.wn-spark-4 { left: 58%; width: 5px; height: 5px; animation-duration: 23s; animation-delay: -17s; }
+.wn-spark-5 { left: 69%; width: 4px; height: 4px; animation-duration: 28s; animation-delay: -7s;  }
+.wn-spark-6 { left: 81%; width: 6px; height: 6px; animation-duration: 21s; animation-delay: -12s; }
+.wn-spark-7 { left: 90%; width: 4px; height: 4px; animation-duration: 26s; animation-delay: -20s; }
+
+.wn-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 132px 132px;
+  opacity: 0.10;
+  -webkit-mask-image: radial-gradient(130% 110% at 50% 46%, #000 36%, transparent 78%);
+  mask-image: radial-gradient(130% 110% at 50% 46%, #000 36%, transparent 78%);
+}
+
+/* shared mono kicker / eyebrow look */
+.wn-eyebrow, .wn-kick, .wn-bet-kick, .wn-c-kick, .wn-d-kick {
+  font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.wn-eyebrow-num { color: var(--accent); margin-left: 2px; }
+
+/* ════════════════ Scene A · 拐点 · 双曲线 ════════════════ */
+.wn-a {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px; padding: 70px 120px; text-align: center;
+}
+.wn-eyebrow { margin-bottom: 4px; }
+.wn-a-head {
+  font-size: 60px; line-height: 1.32; font-weight: 700; color: var(--text);
+  max-width: 1180px;
+}
+.wn-chart-wrap {
+  position: relative; min-height: 392px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.wn-a-legend {
+  display: flex; gap: 40px; align-items: center;
+  font-size: 19px; color: var(--text-2);
+}
+.wn-leg { display: inline-flex; align-items: center; gap: 11px; }
+.wn-leg-dash {
+  width: 30px; height: 0; border-top: 2px dashed var(--text-mute);
+}
+.wn-leg-line {
+  width: 30px; height: 3px; background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.wn-leg--up { color: var(--accent); }
+
+/* ── 自绘双曲线 SVG ── */
+.wn-chart { display: block; overflow: visible; }
+.wn-axis { stroke: var(--rule); stroke-width: 1.5; }
+.wn-axis-num {
+  fill: var(--text-faint); font-size: 15px; text-anchor: middle;
+}
+.wn-c-label { font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.04em; }
+.wn-c-label--cost { fill: var(--text-mute); text-anchor: start; }
+.wn-c-label--cap { fill: var(--accent); text-anchor: end; }
+
+.wn-cross-guide {
+  stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 6;
+  opacity: 0;
+  transition: opacity 600ms ease 720ms;
+}
+.is-lit .wn-cross-guide { opacity: 0.55; }
+
+.wn-curve {
+  fill: none; stroke-linecap: round;
+  stroke-dasharray: 1180; stroke-dashoffset: 1180;
+}
+.wn-curve--cost {
+  stroke: var(--text-mute); stroke-width: 2.5;
+  stroke-dasharray: 1180; stroke-dashoffset: 1180;
+  animation: wn-draw 1200ms var(--ease-quart) 140ms forwards;
+  opacity: 0.62;
+}
+.wn-curve--cap {
+  stroke: var(--accent); stroke-width: 3.4;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+  animation: wn-draw 1200ms var(--ease-quart) 320ms forwards;
+}
+@keyframes wn-draw { to { stroke-dashoffset: 0; } }
+
+/* 交叉点（拐点）—— 画完后点亮 */
+.wn-cross { opacity: 0; }
+.is-lit .wn-cross { animation: wn-cross-in 560ms var(--ease-quart) 640ms forwards; }
+@keyframes wn-cross-in { from { opacity: 0; } to { opacity: 1; } }
+.wn-cross-dot { fill: var(--accent); }
+.wn-cross-halo {
+  fill: var(--accent); opacity: 0.22;
+  transform-box: fill-box; transform-origin: center;
+  animation: wn-pulse 2.1s ease-in-out infinite;
+}
+@keyframes wn-pulse {
+  0%, 100% { transform: scale(0.62); opacity: 0.34; }
+  50%      { transform: scale(1.34); opacity: 0.04; }
+}
+.wn-cross-label {
+  fill: var(--accent); font-size: 17px; letter-spacing: 0.08em; text-anchor: middle;
+  font-weight: 700;
+}
+
+/* ════════════════ Scene B · 可行 → 核心下注 ════════════════ */
+.wn-b {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 80px 120px;
+}
+.wn-b-feasible, .wn-bet {
+  display: flex; flex-direction: column; align-items: center;
+}
+.wn-kick {
+  margin-bottom: 28px;
+  display: flex; align-items: center; justify-content: center;
+}
+.wn-b-line { font-size: 56px; line-height: 1.42; font-weight: 700; color: var(--text); max-width: 1240px; }
+
+/* 核心下注 */
+.wn-bet-kick { margin-bottom: 30px; }
+.wn-bet-h { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.wn-bet-l1 { font-size: 50px; font-weight: 700; color: var(--text-2); }
+.wn-bet-strong { font-size: 116px; font-weight: 700; color: var(--text); line-height: 1.04; }
+.wn-bet-sub {
+  margin-top: 38px; font-size: 21px; color: var(--text-mute);
+  letter-spacing: 0.06em;
+}
+
+/* ════════════════ Scene C · 反其道 · ¥300 流程 ════════════════ */
+.wn-c {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 40px; padding: 64px 110px;
+}
+.wn-c-kick { text-align: center; }
+.wn-c-split {
+  display: flex; align-items: center; justify-content: center; gap: 30px;
+  width: 100%; max-width: 1420px;
+}
+.wn-c-them, .wn-c-us {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 26px 34px; border-radius: 4px; flex: 1;
+}
+.wn-c-them {
+  border: 1px solid var(--rule); background: var(--surface);
+  opacity: 0.78;
+}
+.wn-c-us {
+  border: 1px solid var(--accent);
+  background:
+    linear-gradient(135deg, var(--accent-soft) 0%, transparent 60%),
+    var(--surface-2);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+.wn-c-them-tag, .wn-c-us-tag {
+  font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+}
+.wn-c-them-tag { color: var(--text-mute); }
+.wn-c-us-tag { color: var(--accent); }
+.wn-c-them-text { font-size: 34px; font-weight: 700; color: var(--text-2); }
+.wn-c-us-text { font-size: 34px; font-weight: 700; color: var(--text); line-height: 1.28; }
+.wn-c-num { color: var(--accent); font-weight: 900; font-size: 1.18em; }
+.wn-c-vs {
+  flex: 0 0 auto; font-size: 18px; letter-spacing: 0.16em;
+  color: var(--text-faint); font-weight: 700;
+}
+
+/* ── 三节点流程 ── */
+.wn-flow-wrap { width: 100%; display: flex; justify-content: center; }
+.wn-flow {
+  display: flex; align-items: stretch; justify-content: center;
+  gap: 0; width: 100%; max-width: 1180px;
+}
+.wn-node {
+  position: relative;
+  flex: 0 0 auto; width: 280px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 24px 18px;
+  border: 1px solid var(--rule); border-radius: 4px;
+  background: var(--surface);
+  opacity: 0;
+  animation: wn-node-in 560ms var(--ease-quart) both;
+}
+.wn-node-0 { animation-delay: 540ms; }
+.wn-node-1 { animation-delay: 1180ms; }
+.wn-node-2 { animation-delay: 1820ms; }
+@keyframes wn-node-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* terminal node = focus */
+.wn-node-2 {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 65%), var(--surface-2);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+}
+.wn-node-idx {
+  font-size: 13px; letter-spacing: 0.18em; color: var(--text-faint);
+}
+.wn-node-2 .wn-node-idx { color: var(--accent); }
+.wn-node-title { font-size: 30px; font-weight: 700; color: var(--text); }
+.wn-node-sub { font-size: 13px; letter-spacing: 0.08em; color: var(--text-mute); }
+
+/* 连线 · 自画 + 行进脉冲 */
+.wn-flow-link {
+  position: relative; flex: 1 1 auto; align-self: center;
+  height: 2px; min-width: 40px; margin: 0 -1px;
+  background: var(--rule);
+  transform: scaleX(0); transform-origin: left center;
+  animation: wn-link-grow 460ms var(--ease-quart) both;
+  overflow: visible;
+}
+.wn-flow-link-0 { animation-delay: 1020ms; }
+.wn-flow-link-1 { animation-delay: 1660ms; }
+@keyframes wn-link-grow { to { transform: scaleX(1); } }
+.wn-flow-link::after {
+  content: ""; position: absolute; right: -1px; top: 50%;
+  width: 7px; height: 7px; transform: translate(0, -50%) rotate(45deg);
+  border-top: 2px solid var(--accent); border-right: 2px solid var(--accent);
+}
+.wn-flow-pulse {
+  position: absolute; top: 50%; left: 0;
+  width: 7px; height: 7px; border-radius: 50%; margin-top: -3.5px;
+  background: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
+  opacity: 0;
+  animation: wn-pulse-travel 1.9s linear infinite;
+}
+.wn-flow-link-0 .wn-flow-pulse { animation-delay: 1500ms; }
+.wn-flow-link-1 .wn-flow-pulse { animation-delay: 2100ms; }
+@keyframes wn-pulse-travel {
+  0%   { left: 0;    opacity: 0; }
+  18%  { opacity: 1; }
+  82%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* ════════════════ Scene D · 底线 → 王弢金句 ════════════════ */
+.wn-d {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 52px; padding: 70px 120px; text-align: center;
+}
+.wn-d-line-wrap { display: flex; flex-direction: column; align-items: center; }
+.wn-d-kick { margin-bottom: 24px; }
+.wn-d-line { font-size: 58px; line-height: 1.34; font-weight: 700; color: var(--text); }
+
+/* 王弢金句卡（pull-quote 气质 + 背书署名） */
+.wn-quote {
+  position: relative;
+  display: flex; align-items: stretch;
+  max-width: 1120px; width: 100%;
+  padding: 38px 48px 38px 44px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+.wn-quote-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 22px var(--accent-glow);
+  border-radius: 6px 0 0 6px;
+}
+.wn-quote-body { position: relative; padding-left: 10px; }
+.wn-quote-mark {
+  position: absolute; left: -8px; top: -42px;
+  font-family: var(--font-display-en); font-size: 120px; line-height: 1;
+  color: var(--accent); opacity: 0.20;
+}
+.wn-quote-text {
+  border-left: 0; padding: 0;
+  font-size: 50px; line-height: 1.32; color: var(--text);
+  margin: 0;
+}
+.wn-quote-by {
+  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  margin-top: 26px;
+}
+.wn-quote-name { font-size: 28px; font-weight: 700; color: var(--text); }
+.wn-quote-meta {
+  font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.wn-quote-by::before {
+  content: ""; width: 22px; height: 2px; background: var(--accent);
+  align-self: center; margin-right: -4px;
+}

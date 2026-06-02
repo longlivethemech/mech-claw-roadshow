@@ -1,0 +1,299 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 02 · vision — prefix .vi-  (共生 → 难反驳 → S 曲线 → 词替换)
+ * ════════════════════════════════════════════════════════════════════ */
+
+.vi-root { position: absolute; inset: 0; overflow: hidden; }
+.vi-em { color: var(--accent); font-style: normal; }
+.vi-strike {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+.vi-faded { color: var(--text-mute); }
+
+/* stacking: ambient behind, scenes above */
+.vi-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.vi-root > .scene-fade { z-index: 2; }
+
+/* shared eyebrow */
+.vi-eyebrow {
+  font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mute);
+  display: inline-flex; align-items: center;
+}
+
+/* ───────── 持续氛围 · 极慢漂移暖色光晕 ───────── */
+.vi-aura {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 68%);
+  filter: blur(40px); opacity: 0.6;
+}
+.vi-aura-1 {
+  width: 760px; height: 760px; top: -240px; left: -180px;
+  animation: vi-aura-a 30s ease-in-out infinite;
+}
+.vi-aura-2 {
+  width: 620px; height: 620px; bottom: -260px; right: -160px;
+  animation: vi-aura-b 36s ease-in-out infinite;
+}
+@keyframes vi-aura-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(60px, 40px) scale(1.1); }
+}
+@keyframes vi-aura-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-50px, -30px) scale(1.08); }
+}
+
+/* ════════════════ Scene A · 共生情感底 ════════════════ */
+.vi-a { position: absolute; inset: 0; }
+
+/* coexist 照片：压暗 + 暗角 + 极缓 Ken-Burns 推近 */
+.vi-a-photo { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.vi-a-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  /* 图偏粗糙：压暗 + 降饱和，仅作氛围层 */
+  filter: brightness(0.42) saturate(0.78) contrast(1.04);
+  transform-origin: 58% 46%;
+  animation: vi-kenburns 22s ease-out both;
+}
+@keyframes vi-kenburns {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.16); }
+}
+/* 暖色压暗分级，把照片推进暗场底，让文字浮上来 */
+.vi-a-grade {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(10, 9, 8, 0.46) 0%, rgba(10, 9, 8, 0.30) 34%, rgba(10, 9, 8, 0.86) 100%),
+    linear-gradient(90deg, rgba(10, 9, 8, 0.78) 0%, rgba(10, 9, 8, 0.18) 52%, rgba(10, 9, 8, 0.62) 100%);
+}
+/* 影院暗角 */
+.vi-a-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 96% at 42% 44%, transparent 46%, rgba(0, 0, 0, 0.72) 100%);
+}
+
+.vi-a-copy {
+  position: absolute; z-index: 1;
+  left: 132px; bottom: 150px; max-width: 1080px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 22px;
+}
+.vi-a-hero {
+  font-size: 84px; line-height: 1.16; font-weight: 700; color: var(--text);
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+}
+.vi-a-sub {
+  font-size: 30px; color: var(--text-2); letter-spacing: 0.04em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+.vi-a-bet {
+  position: relative;
+  margin-top: 10px; padding-left: 22px;
+  font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 38px; color: var(--text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+.vi-a-bet-line {
+  position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px;
+  background: var(--accent); box-shadow: 0 0 16px var(--accent-glow);
+}
+
+/* ════════════════ Scene B · 难反驳 → 门槛 ════════════════ */
+.vi-b {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px; padding: 92px 120px; text-align: center;
+}
+.vi-b .vi-eyebrow { margin-bottom: 4px; }
+.vi-b-claim { font-size: 64px; font-weight: 700; color: var(--text); line-height: 1.12; }
+
+/* 反方对照卡 */
+.vi-counter {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 26px 48px;
+  border-left: 3px solid var(--rule);
+  border-right: 3px solid var(--rule);
+}
+.vi-counter-tag {
+  font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.vi-counter-quote { font-size: 38px; color: var(--text-2); }
+
+/* 焦点反转：技术 → 接受度 */
+.vi-pivot {
+  margin-top: 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.vi-pivot-lead {
+  font-size: 17px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.vi-pivot-row {
+  display: flex; align-items: center; gap: 30px;
+  font-weight: 700; line-height: 1;
+}
+.vi-pivot-row > * { display: inline-flex; align-items: center; }
+.vi-pivot-row .vi-faded { font-size: 52px; }
+.vi-pivot-arrow { font-size: 44px; color: var(--text-faint); }
+.vi-pivot-big {
+  font-size: 104px; line-height: 1;
+  text-shadow: 0 0 56px var(--accent-glow);
+}
+
+/* ════════════════ Scene C · 接受度 S 曲线 ════════════════ */
+.vi-c {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 26px; padding: 64px 96px 72px;
+}
+.vi-c-head { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.vi-c-title { font-size: 46px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.vi-c-foot {
+  font-size: 26px; color: var(--text-2); text-align: center; max-width: 1180px;
+  line-height: 1.5;
+}
+
+/* ── 自绘 SVG ── */
+.vi-svg { display: block; overflow: visible; }
+
+.vi-grid line { stroke: var(--rule); stroke-width: 2; }
+.vi-axis-y, .vi-axis-x {
+  fill: var(--text-mute); font-family: var(--font-mono); font-size: 15px;
+}
+.vi-axis-y { text-anchor: end; }
+.vi-axis-x { text-anchor: end; }
+
+.vi-asymptote {
+  stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 4 7;
+  opacity: 0; animation: vi-fade-soft 700ms ease 900ms forwards;
+}
+.vi-asymptote-t {
+  fill: var(--text-faint); font-family: var(--font-mono); font-size: 13px;
+  text-anchor: end; letter-spacing: 0.08em;
+  opacity: 0; animation: vi-fade-soft 700ms ease 1100ms forwards;
+}
+@keyframes vi-fade-soft { to { opacity: 0.7; } }
+
+/* 曲线下填充：随曲线生长后柔淡浮现 */
+.vi-area {
+  fill: var(--accent-soft);
+  opacity: 0; animation: vi-area-in 1000ms ease 700ms forwards;
+}
+@keyframes vi-area-in { to { opacity: 1; } }
+
+/* 主曲线：stroke-dashoffset 自画（先平后陡再饱和） */
+.vi-curve {
+  fill: none; stroke: var(--accent); stroke-width: 4.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+  stroke-dasharray: 1100; stroke-dashoffset: 1100;
+  animation: vi-draw 1500ms var(--ease-quart) 200ms forwards;
+}
+@keyframes vi-draw { to { stroke-dashoffset: 0; } }
+
+/* ── 节点：互联网 / 智能手机 ── */
+.vi-node-stem { stroke: var(--rule); stroke-width: 1.5; opacity: 0; }
+.vi-node-halo {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center;
+}
+.vi-node-dot {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center; transform: scale(0);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+.vi-node-t {
+  fill: var(--text); font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 21px; text-anchor: middle; opacity: 0;
+}
+.vi-node-t--below { fill: var(--text); }
+
+/* lit 后点亮（两节点错峰） */
+.vi-nodes.is-lit .vi-node-1 .vi-node-stem { animation: vi-fade-soft 400ms ease 80ms forwards; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 180ms forwards; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 320ms infinite; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-t    { animation: vi-fade-up 520ms ease 300ms forwards; }
+
+.vi-nodes.is-lit .vi-node-2 .vi-node-stem { animation: vi-fade-soft 400ms ease 320ms forwards; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 420ms forwards; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 560ms infinite; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-t    { animation: vi-fade-up 520ms ease 540ms forwards; }
+
+@keyframes vi-pop { to { opacity: 1; transform: scale(1); } }
+@keyframes vi-halo {
+  0%, 100% { opacity: 0.30; transform: scale(0.7); }
+  50%      { opacity: 0.05; transform: scale(1.35); }
+}
+@keyframes vi-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 延伸：指向"智能生命" ── */
+.vi-extend-line {
+  fill: none; stroke: var(--accent); stroke-width: 2.5;
+  stroke-linecap: round; stroke-dasharray: 5 8;
+  opacity: 0;
+  /* 自身再用 dashoffset 流动一点（虚线行进感由透明度承担即可） */
+}
+.vi-extend-halo {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center;
+}
+.vi-extend-dot {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center; transform: scale(0);
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+.vi-extend-t {
+  fill: var(--accent); font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 22px; text-anchor: middle; opacity: 0;
+}
+.vi-extend.is-lit .vi-extend-line { animation: vi-fade-soft 600ms ease 760ms forwards; }
+.vi-extend.is-lit .vi-extend-dot  { animation: vi-pop 560ms var(--ease-overshoot) 980ms forwards; }
+.vi-extend.is-lit .vi-extend-halo { animation: vi-halo 2s ease-in-out 1120ms infinite; }
+.vi-extend.is-lit .vi-extend-t    { animation: vi-fade-up 560ms ease 1080ms forwards; }
+
+/* ════════════════ Scene D · tight 词替换锁版 ════════════════ */
+.vi-d {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px; padding: 100px 120px; text-align: center;
+}
+.vi-d-glow {
+  position: absolute; top: 50%; left: 50%; width: 1280px; height: 720px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+}
+.vi-d-lead { position: relative; font-size: 30px; color: var(--text-2); letter-spacing: 0.04em; }
+.vi-d-swap {
+  position: relative;
+  display: grid; place-items: center;
+  min-height: 150px;
+}
+.vi-d-swap > * { grid-area: 1 / 1; }
+/* 旧词：先在，随后收紧淡出 */
+.vi-d-old {
+  font-size: 84px; font-weight: 700; color: var(--text-mute);
+  animation: vi-old-out 720ms var(--ease-quart) 360ms forwards;
+}
+@keyframes vi-old-out {
+  from { opacity: 0.85; filter: blur(0); letter-spacing: -0.01em; transform: translateY(0); }
+  to   { opacity: 0;    filter: blur(10px); letter-spacing: -0.16em; transform: translateY(-10px); }
+}
+.vi-d-new {
+  font-size: 96px; font-weight: 700; color: var(--text); line-height: 1.04;
+  text-shadow: 0 0 60px var(--accent-glow);
+}
+
+.vi-d-brand {
+  position: relative; margin-top: 18px;
+  display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;
+}
+.vi-d-brand-name { font-size: 40px; color: var(--text); letter-spacing: 0.01em; }
+.vi-d-brand-div { width: 1px; height: 24px; background: var(--rule); }
+.vi-d-brand-tag { font-size: 16px; letter-spacing: 0.06em; color: var(--text-mute); }

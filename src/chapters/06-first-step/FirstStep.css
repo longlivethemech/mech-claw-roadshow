@@ -1,0 +1,282 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 06 · first-step — prefix .fs-
+ *   child 情感底 → 自绘"杠杆 + 支点"(精准打在杠杆点) → 承载者重定义
+ *   → 家长金句锁版
+ * ════════════════════════════════════════════════════════════════════ */
+
+.fs-root { position: absolute; inset: 0; overflow: hidden; }
+.fs-em { color: var(--accent); font-style: normal; }
+.fs-strike {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--text-faint);
+}
+
+/* stacking: ambient behind, scenes above */
+.fs-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.fs-root > .scene-fade { z-index: 2; }
+
+/* ───────── 持续氛围 · 暖角光 + 极细基线 ───────── */
+.fs-glow {
+  position: absolute; bottom: -220px; left: 50%;
+  width: 1100px; height: 700px; transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 100%, var(--accent-soft) 0%, transparent 62%);
+  filter: blur(8px);
+}
+.fs-baseline {
+  position: absolute; left: 0; right: 0; bottom: 16%;
+  height: 1px; background: var(--rule); opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* ───────── 取景框角标（情感底图复用） ───────── */
+.fs-corner { position: absolute; width: 40px; height: 40px; border: 2px solid var(--accent); }
+.fs-corner.tl { top: 0; left: 0;  border-right: 0; border-bottom: 0; }
+.fs-corner.tr { top: 0; right: 0; border-left: 0;  border-bottom: 0; }
+.fs-corner.bl { bottom: 0; left: 0;  border-right: 0; border-top: 0; }
+.fs-corner.br { bottom: 0; right: 0; border-left: 0;  border-top: 0; }
+
+/* shared eyebrow rhythm */
+.fs-eyebrow,
+.fs-b-eyebrow,
+.fs-c-eyebrow {
+  font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mute);
+  display: flex; align-items: center;
+}
+
+/* ════════════════ Scene A · child 情感底 + 第一步很具体 ════════════════ */
+.fs-a {
+  position: absolute; inset: 0;
+  display: grid; grid-template-columns: 0.92fr 1.08fr;
+  align-items: center; gap: 72px;
+  padding: 96px 132px;
+}
+
+/* 情感底图（暖、暗角、克制 Ken-Burns） */
+.fs-a-photo {
+  position: relative; justify-self: center;
+  width: 560px; height: 620px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  box-shadow: 0 40px 110px rgba(0, 0, 0, 0.6);
+}
+.fs-a-img {
+  width: 100%; height: 100%; object-fit: cover;
+  /* 图偏粗糙 → 压暗、降饱和当氛围底 */
+  filter: brightness(0.66) contrast(1.04) saturate(0.92) sepia(0.14);
+  transform-origin: 56% 40%;
+  animation: fs-kenburns 22s ease-in-out infinite alternate;
+}
+@keyframes fs-kenburns {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.13); }
+}
+.fs-a-veil {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 100% at 50% 36%, transparent 42%, rgba(10, 9, 8, 0.78) 100%),
+    linear-gradient(180deg, rgba(10, 9, 8, 0.28) 0%, transparent 40%, rgba(10, 9, 8, 0.46) 100%);
+}
+
+.fs-a-copy { max-width: 760px; }
+.fs-eyebrow { margin-bottom: 30px; }
+.fs-a-h {
+  font-size: 62px; line-height: 1.34; font-weight: 700; color: var(--text);
+}
+.fs-a-num {
+  color: var(--accent); font-weight: 900; font-size: 1.26em;
+  letter-spacing: -0.04em; margin-right: 2px;
+}
+.fs-a-age { font-size: 1em; }
+.fs-a-hold {
+  min-height: 230px;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  gap: 28px; padding-top: 34px;
+}
+.fs-a-l2 { font-size: 36px; line-height: 1.5; color: var(--text-2); font-weight: 700; }
+
+/* Moxie → 2026 轨迹小条 */
+.fs-a-track {
+  display: inline-flex; align-items: center; gap: 18px; flex-wrap: wrap;
+}
+.fs-track-node {
+  font-size: 13px; letter-spacing: 0.14em;
+  color: var(--text-mute);
+  padding: 7px 14px; border: 1px solid var(--rule);
+}
+.fs-track-node.is-now { color: var(--accent); border-color: var(--accent); }
+.fs-track-arrow { font-size: 22px; color: var(--text-faint); }
+
+/* ════════════════ Scene B · 杠杆 + 支点（中心件） ════════════════ */
+.fs-b {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; padding: 72px 110px 84px;
+}
+.fs-b-eyebrow { justify-content: center; margin-bottom: 6px; }
+.fs-b-stage { width: 100%; display: grid; place-items: center; }
+
+/* 字幕区：固定高度，避免不同 step 文案抖动中心件 */
+.fs-b-cap {
+  min-height: 132px;
+  display: flex; align-items: flex-start; justify-content: center;
+  text-align: center;
+}
+.fs-cap { font-size: 38px; line-height: 1.46; font-weight: 700; color: var(--text); }
+
+/* tight 词替换：练手市场 → 承载者 */
+.fs-swap-old {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--text-faint);
+}
+.fs-swap-new {
+  color: var(--accent);
+  font-size: 1.14em;
+  padding-bottom: 2px;
+  border-bottom: 3px solid var(--accent);
+}
+
+/* ── 自绘杠杆 SVG ── */
+.fs-lever { display: block; overflow: visible; width: min(1080px, 86%); height: auto; }
+
+/* 地面基线 */
+.fs-ground {
+  stroke: var(--rule); stroke-width: 2;
+  stroke-dasharray: 1080; stroke-dashoffset: 1080;
+  animation: fs-draw 900ms var(--ease-quart) 80ms forwards;
+}
+@keyframes fs-draw { to { stroke-dashoffset: 0; } }
+
+/* 支点：自画三角(stroke) + 顶端点亮核 */
+.fs-fulcrum-tri {
+  fill: none;
+  stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round;
+  stroke-dasharray: 320; stroke-dashoffset: 320;
+  animation: fs-draw 760ms var(--ease-quart) 260ms forwards;
+}
+.fs-fulcrum-dot {
+  fill: var(--accent);
+  opacity: 0;
+  animation: fs-pop 460ms var(--ease-quart) 940ms forwards;
+}
+.fs-fulcrum-halo {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center;
+  animation:
+    fs-pop 460ms var(--ease-quart) 940ms forwards,
+    fs-halo 2.4s ease-in-out 1400ms infinite;
+}
+@keyframes fs-pop { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fs-halo {
+  0%, 100% { transform: scale(0.7);  opacity: 0.30; }
+  50%      { transform: scale(1.35); opacity: 0.05; }
+}
+.fs-fulcrum-cap {
+  fill: var(--accent); font-family: var(--font-mono);
+  font-size: 17px; letter-spacing: 0.12em; text-anchor: middle;
+  opacity: 0; animation: fs-pop 600ms ease 1000ms forwards;
+}
+
+/* 杠杆梁：绕支点尖端(470,250) 旋转 */
+.fs-beam {
+  transform-box: view-box; transform-origin: 470px 250px;
+  transform: rotate(0deg);
+  transition: transform 1100ms var(--ease-quart);
+}
+.fs-lever.is-tilted .fs-beam { transform: rotate(7deg); } /* 左沉(成年人) / 右起(孩子) */
+.fs-beam-bar {
+  stroke: var(--text-2); stroke-width: 9; stroke-linecap: round;
+  stroke-dasharray: 960; stroke-dashoffset: 960;
+  animation: fs-draw 900ms var(--ease-quart) 120ms forwards;
+}
+
+/* 端点文字共用 */
+.fs-end-label {
+  fill: var(--text); font-family: var(--font-display-cn);
+  font-weight: 700; font-size: 26px; text-anchor: middle;
+}
+.fs-end-sub {
+  fill: var(--text-mute); font-family: var(--font-mono);
+  font-size: 15px; letter-spacing: 0.06em; text-anchor: middle;
+}
+
+/* 左端 · 成年人：沉重重块（纹丝不动） */
+.fs-adult-mass {
+  fill: var(--surface-3); stroke: var(--rule); stroke-width: 1.5;
+  opacity: 0; animation: fs-pop 560ms var(--ease-quart) 360ms forwards;
+}
+.fs-adult .fs-end-label,
+.fs-adult .fs-end-sub { opacity: 0; animation: fs-pop 600ms ease 480ms forwards; }
+/* 倾斜后成年人端被"压住"：标签变冷、重块加深 */
+.fs-lever.is-tilted .fs-adult-mass { fill: var(--surface-2); }
+.fs-lever.is-tilted .fs-adult .fs-end-label { fill: var(--text-mute); }
+
+/* 右端 · 孩子：轻、可塑节点 */
+.fs-child-node {
+  fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2;
+  opacity: 0; animation: fs-pop 560ms var(--ease-quart) 360ms forwards;
+}
+.fs-child .fs-end-label,
+.fs-child .fs-end-sub { opacity: 0; animation: fs-pop 600ms ease 480ms forwards; }
+/* 倾斜后孩子端被"撬起"：节点点亮 */
+.fs-lever.is-tilted .fs-child-node { fill: var(--accent-glow); }
+.fs-lever.is-tilted .fs-child .fs-end-label { fill: var(--accent); }
+
+/* 「写进/铭刻」：孩子节点内一道暖纹，step4 起点亮 */
+.fs-child-mark {
+  stroke: var(--text); stroke-width: 3; stroke-linecap: round;
+  opacity: 0;
+}
+.fs-lever.is-engraved .fs-child-node {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 18px var(--accent-glow));
+}
+.fs-lever.is-engraved .fs-child-mark {
+  stroke: var(--shell);
+  animation: fs-engrave 620ms var(--ease-quart) forwards;
+}
+@keyframes fs-engrave {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.fs-child-mark { transform-box: fill-box; transform-origin: center; }
+
+/* ════════════════ Scene C · 家长金句锁版 ════════════════ */
+.fs-c {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 96px 130px; text-align: center;
+}
+.fs-c-glow {
+  position: absolute; top: 50%; left: 50%;
+  width: 1320px; height: 720px; transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+}
+.fs-c-eyebrow {
+  position: relative; z-index: 2; justify-content: center;
+  margin-bottom: 44px;
+}
+.fs-c-quote {
+  position: relative; z-index: 2;
+  font-size: 64px; line-height: 1.42; font-weight: 700; color: var(--text);
+  max-width: 1320px;
+}
+.fs-c-ln { display: block; }
+.fs-c-mark {
+  color: var(--accent); opacity: 0.4;
+  font-size: 0.7em; line-height: 1;
+  display: block; margin-bottom: -8px;
+}
+.fs-c-mark--close { margin-top: 4px; margin-bottom: 0; }
+.fs-c-sig {
+  position: relative; z-index: 2;
+  margin-top: 56px;
+  font-size: 17px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-mute);
+}

@@ -1,0 +1,262 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 03 · founder — prefix .fo-
+ *   抛问 → 自绘人生轨迹 timeline → 学术数据三卡 → 转身 → 金句锁版
+ * ════════════════════════════════════════════════════════════════════ */
+
+.fo-root { position: absolute; inset: 0; overflow: hidden; }
+.fo-em { color: var(--accent); font-style: normal; }
+.fo-strike {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--text-faint);
+}
+
+/* stacking: ambient behind, scenes above */
+.fo-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.fo-root > .scene-fade { z-index: 2; }
+
+/* ───────── 持续氛围 · 细网格 + 暖角光 ───────── */
+.fo-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.16;
+  -webkit-mask-image: radial-gradient(120% 95% at 50% 46%, #000 38%, transparent 82%);
+  mask-image: radial-gradient(120% 95% at 50% 46%, #000 38%, transparent 82%);
+}
+.fo-glow {
+  position: absolute; top: -180px; right: -160px;
+  width: 760px; height: 760px;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 64%);
+  filter: blur(6px);
+}
+
+/* shared eyebrow rhythm */
+.fo-eyebrow,
+.fo-b-eyebrow,
+.fo-c-eyebrow,
+.fo-d-when {
+  font-size: 17px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mute);
+  display: flex; align-items: center;
+}
+
+/* ════════════════ Scene A · 抛问 → 引出轨道 ════════════════ */
+.fo-a {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 30px; padding: 90px 150px; text-align: center;
+}
+.fo-a .fo-eyebrow { justify-content: center; margin-bottom: 6px; }
+.fo-a-q { font-size: 62px; line-height: 1.4; font-weight: 700; color: var(--text-2); }
+.fo-a-q .fo-em { font-size: 1.12em; }
+.fo-a-hold {
+  min-height: 230px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 28px;
+  padding-top: 8px;
+}
+.fo-a-ans { font-size: 50px; line-height: 1.34; font-weight: 700; color: var(--text); }
+.fo-a-cue {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 14px; letter-spacing: 0.26em; color: var(--text-mute);
+}
+.fo-cue-dot {
+  width: 30px; height: 1px; background: var(--accent);
+}
+
+/* ════════════════ Scene B · 自绘人生轨迹 timeline ════════════════ */
+.fo-b {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 56px; padding: 80px 70px;
+}
+.fo-b-eyebrow { justify-content: center; }
+.fo-b-stage { width: 100%; display: flex; justify-content: center; }
+
+.fo-tl { display: block; width: 1480px; max-width: 96%; height: auto; overflow: visible; }
+
+/* 底轴：灰 */
+.fo-tl-axis {
+  stroke: var(--rule); stroke-width: 2;
+}
+/* 点亮轴：暖色，从左生长到末点 */
+.fo-tl-axis-lit {
+  stroke: var(--accent); stroke-width: 2.5;
+  stroke-dasharray: 1210; stroke-dashoffset: 1210;
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+  animation: fo-grow 1500ms var(--ease-quart) 240ms forwards;
+}
+@keyframes fo-grow { to { stroke-dashoffset: 0; } }
+
+/* 引线 */
+.fo-tl-conn {
+  stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 2 4;
+}
+
+/* 节点初始：未点亮（灰、收小、透明） */
+.fo-tl-node { opacity: 0; }
+.fo-tl-halo {
+  fill: var(--accent); opacity: 0;
+  transform-box: fill-box; transform-origin: center; transform: scale(0.3);
+}
+.fo-tl-dot {
+  fill: var(--text-faint);
+  transform-box: fill-box; transform-origin: center; transform: scale(0.4);
+}
+.fo-tl-en {
+  fill: var(--text-mute); font-family: var(--font-mono);
+  font-size: 15px; letter-spacing: 0.16em; text-anchor: middle;
+}
+.fo-tl-label {
+  fill: var(--text); font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 30px; text-anchor: middle;
+}
+.fo-tl-sub {
+  fill: var(--text-mute); font-family: var(--font-mono);
+  font-size: 13.5px; letter-spacing: 0.04em; text-anchor: middle;
+}
+
+/* 节点逐个点亮（错峰：轴线推进到该点时亮） */
+.fo-tl-node { animation: fo-node-in 620ms var(--ease-quart) both; }
+.fo-tl-n0 { animation-delay: 360ms; }
+.fo-tl-n1 { animation-delay: 740ms; }
+.fo-tl-n2 { animation-delay: 1120ms; }
+.fo-tl-n3 { animation-delay: 1520ms; }
+@keyframes fo-node-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* 实心点点亮：变暖 + 弹到位 */
+.fo-tl-node .fo-tl-dot { animation: fo-dot-pop 560ms var(--ease-overshoot) both; }
+.fo-tl-n0 .fo-tl-dot { animation-delay: 420ms; }
+.fo-tl-n1 .fo-tl-dot { animation-delay: 800ms; }
+.fo-tl-n2 .fo-tl-dot { animation-delay: 1180ms; }
+.fo-tl-n3 .fo-tl-dot { animation-delay: 1580ms; }
+@keyframes fo-dot-pop {
+  from { transform: scale(0.4); fill: var(--text-faint); }
+  60%  { fill: var(--accent); }
+  to   { transform: scale(1); fill: var(--accent); }
+}
+/* 末点（阿贡）更亮、带持续脉冲 halo */
+.fo-tl-n3 .fo-tl-dot { fill: var(--accent); }
+.fo-tl-n3 .fo-tl-halo {
+  animation: fo-node-in 620ms var(--ease-quart) 1520ms both,
+             fo-halo 2.4s ease-in-out 2100ms infinite;
+}
+@keyframes fo-halo {
+  0%, 100% { opacity: 0.30; transform: scale(0.7); }
+  50%      { opacity: 0.05; transform: scale(1.35); }
+}
+
+/* ════════════════ Scene C · 学术数据三卡 ════════════════ */
+.fo-c {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 52px; padding: 90px 120px;
+}
+.fo-c-eyebrow { justify-content: center; color: var(--text-mute); }
+.fo-c-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 30px; width: 100%; max-width: 1320px;
+}
+.fo-stat {
+  position: relative;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  padding: 44px 40px 38px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+.fo-stat::before {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--rule);
+}
+.fo-stat--hero { background: var(--surface-3); }
+.fo-stat--hero::before { background: var(--accent); }
+.fo-stat-fig {
+  font-size: 96px; line-height: 0.92; font-weight: 900;
+  color: var(--text); letter-spacing: -0.04em;
+}
+.fo-stat--hero .fo-stat-fig { color: var(--accent); }
+.fo-stat-name { font-size: 32px; font-weight: 700; color: var(--text); }
+.fo-stat-sub {
+  font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ════════════════ Scene D · 转身 ════════════════ */
+.fo-d {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 26px; padding: 90px 150px; text-align: center;
+}
+/* 旧轨道：一条暗下去、向左滑走的虚线（隐喻"放下的轨道"） */
+.fo-d-orbit {
+  position: absolute; top: 50%; left: 50%;
+  width: 1500px; height: 1px; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.fo-d-orbit-line {
+  position: absolute; inset: 0;
+  border-top: 1.5px dashed var(--rule);
+  transform-origin: left center;
+  animation: fo-orbit-fade 1400ms var(--ease-quart) 200ms both;
+}
+.fo-d-orbit-dot {
+  position: absolute; top: 50%; right: 8%;
+  width: 11px; height: 11px; margin-top: -5.5px; border-radius: 50%;
+  background: var(--text-faint);
+  animation: fo-orbit-drift 1600ms var(--ease-quart) 200ms both;
+}
+@keyframes fo-orbit-fade {
+  from { opacity: 0.55; transform: scaleX(1); }
+  to   { opacity: 0.12; transform: scaleX(1); }
+}
+@keyframes fo-orbit-drift {
+  from { opacity: 0.7; transform: translateX(0); }
+  to   { opacity: 0;   transform: translateX(-240px); }
+}
+.fo-d-when { position: relative; justify-content: center; margin-bottom: 8px; }
+.fo-d-l1 {
+  position: relative;
+  font-size: 56px; line-height: 1.32; font-weight: 700; color: var(--text-2);
+}
+.fo-d-hold {
+  position: relative;
+  min-height: 220px;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 18px;
+}
+.fo-d-l2 { font-size: 64px; line-height: 1.28; font-weight: 700; color: var(--text); }
+
+/* ════════════════ Scene E · 金句锁版 ════════════════ */
+.fo-e {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 40px; padding: 100px 130px; text-align: center;
+}
+.fo-e-glow {
+  position: absolute; top: 50%; left: 50%; width: 1300px; height: 720px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+}
+.fo-e-lead {
+  position: relative;
+  font-size: 44px; line-height: 1.4; font-weight: 700; color: var(--text-2);
+}
+.fo-e-quote {
+  position: relative;
+  font-size: 104px; line-height: 1.14; font-weight: 700; color: var(--text);
+}
+.fo-e-ln { display: block; }
+.fo-e-sig {
+  position: relative;
+  font-size: 16px; letter-spacing: 0.18em; color: var(--text-mute);
+  margin-top: 18px;
+}

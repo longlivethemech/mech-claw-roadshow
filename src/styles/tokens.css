@@ -1,0 +1,73 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · bold-signal · mech-claw warm-amber variant
+ *   Cinematic pitch-deck dark, warmed toward candle-lit amber so the
+ *   "living companion" soul reads through the investor-pitch frame.
+ *   Base = bold-signal (Archivo Black display, Space Grotesk body,
+ *   JetBrains Mono badges); palette shifted from hot signal-orange to a
+ *   warm honey-amber on a warm near-black canvas (lamplight in a dark room).
+ *
+ *   character knobs (unchanged from bold-signal):
+ *     • hero numbers   — Archivo Black, weight 900, near-zero tracking
+ *     • rule           — 2px solid
+ *     • card           — 12px radius
+ *     • surface        — gentle warm diagonal gradient
+ *     • motion         — punchy ease-out
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette · warm near-black + honey amber ─── */
+  --shell:        #0a0908;
+  --surface:      #15120e;
+  --surface-2:    #221d16;
+  --surface-3:    #322a20;
+  --text:         #f7f3ec;
+  --text-2:       #d6cfc3;
+  --text-mute:    #8c8377;
+  --text-faint:   #595148;
+  --rule:         #39312a;
+  --accent:       #ff9a3d;             /* warm honey amber */
+  --accent-soft:  rgba(255, 154, 61, 0.15);
+  --accent-glow:  rgba(255, 154, 61, 0.50);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Archivo Black", "Inter", "Helvetica Neue", sans-serif;
+  --font-body:       "Space Grotesk", "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01", "ss02";
+
+  /* ─── motion: punchy pitch ─── */
+  --dur-quick:     180ms;
+  --dur-base:      420ms;
+  --dur-slow:      680ms;
+  --dur-cinematic: 1050ms;
+
+  /* ─── design identity: bold hero ─── */
+  --r-card:        var(--r-md);     /* 12px chunky-but-soft */
+  --r-stage:       0;
+  --rule-w:        2px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  900;
+  --hero-num-track:   -0.04em;
+  --stage-pad-x:   100px;
+  --stage-pad-y:   80px;
+  --card-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.50),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-stage:
+    0 60px 160px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  /* ─── decoration: warm diagonal hero gradient ─── */
+  --surface-pattern:
+    linear-gradient(135deg, rgba(255, 154, 61, 0.0) 0%, rgba(255, 154, 61, 0.05) 38%, transparent 68%),
+    linear-gradient(135deg, #15120e 0%, #241d15 50%, #14110d 100%);
+  --surface-pattern-size: 100% 100%, 100% 100%;
+  --surface-pattern-blend: normal, normal;
+  --surface-pattern-opacity: 1;
+
+  /* ─── optional soft cinematic vignette (warm edges) ─── */
+  --surface-vignette:
+    radial-gradient(130% 100% at 50% 32%, transparent 58%, rgba(0, 0, 0, 0.34) 100%);
+}

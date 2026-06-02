@@ -1,0 +1,381 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 09 · northstar — prefix .ns-  (全片落幕)
+ *   流失↓曲线 → 翻转↑(灵魂迁移) → "流失不是漏水，是吞吐量" → 北极星金句
+ *   + 视频位占位 → "从陪好第一个孩子开始" + 品牌锁版
+ * ════════════════════════════════════════════════════════════════════ */
+
+.ns-root { position: absolute; inset: 0; overflow: hidden; }
+.ns-em { color: var(--accent); font-style: normal; }
+.ns-strike {
+  color: var(--text-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+/* stacking: ambient behind, scenes above */
+.ns-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.ns-root > .scene-fade { z-index: 2; }
+
+/* ───────── 持续氛围 · 余烬上浮 + 收尾暗角暖光 ───────── */
+.ns-ember {
+  position: absolute;
+  bottom: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 188, 110, 0.9) 0%, transparent 70%);
+  filter: blur(0.5px);
+  opacity: 0;
+  animation-name: ns-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes ns-drift {
+  0%   { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+  13%  { opacity: 0.48; }
+  84%  { opacity: 0.3; }
+  100% { transform: translateY(-1200px) translateX(34px) scale(1.05); opacity: 0; }
+}
+.ns-ember-0 { left: 7%;  width: 5px; height: 5px; animation-duration: 21s; animation-delay: -2s;  }
+.ns-ember-1 { left: 17%; width: 7px; height: 7px; animation-duration: 26s; animation-delay: -7s;  }
+.ns-ember-2 { left: 28%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: -13s; }
+.ns-ember-3 { left: 39%; width: 6px; height: 6px; animation-duration: 23s; animation-delay: -4s;  }
+.ns-ember-4 { left: 48%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: -15s; }
+.ns-ember-5 { left: 59%; width: 7px; height: 7px; animation-duration: 27s; animation-delay: -9s;  }
+.ns-ember-6 { left: 68%; width: 4px; height: 4px; animation-duration: 19s; animation-delay: -17s; }
+.ns-ember-7 { left: 78%; width: 6px; height: 6px; animation-duration: 24s; animation-delay: -5s;  }
+.ns-ember-8 { left: 87%; width: 5px; height: 5px; animation-duration: 22s; animation-delay: -11s; }
+.ns-ember-9 { left: 94%; width: 4px; height: 4px; animation-duration: 28s; animation-delay: -19s; }
+
+/* 收尾暖光 haze —— 贴近底部的一抹炉光，渲染"落幕"氛围 */
+.ns-haze {
+  position: absolute; left: 50%; bottom: -36%;
+  width: 1500px; height: 900px; transform: translateX(-50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 62%);
+  opacity: 0.7;
+}
+
+/* 共用 mono eyebrow / kicker */
+.ns-eyebrow, .ns-kick, .ns-star-kick {
+  font-size: 16px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ════════════════ Scene A · 诅咒 · 流失↓曲线 ════════════════ */
+.ns-a {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 22px; padding: 60px 110px; text-align: center;
+}
+.ns-a-head {
+  font-size: 56px; line-height: 1.32; font-weight: 700; color: var(--text);
+  max-width: 1180px;
+}
+.ns-chart-wrap {
+  position: relative; min-height: 430px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ns-a-foot { min-height: 56px; display: flex; align-items: center; justify-content: center; }
+.ns-a-tag { font-size: 26px; color: var(--text-2); }
+.ns-a-tag-sub { font-size: 16px; letter-spacing: 0.12em; color: var(--text-faint); }
+.ns-a-flip { font-size: 40px; font-weight: 700; color: var(--text); }
+
+/* ── 自绘流失/吞吐曲线 SVG ── */
+.ns-curve { display: block; overflow: visible; }
+.ns-axis { stroke: var(--rule); stroke-width: 1.5; }
+.ns-axis-cap { fill: var(--text-mute); font-size: 14px; letter-spacing: 0.04em; text-anchor: start; }
+.ns-axis-cap--x { text-anchor: end; }
+
+/* 5–10 岁主力高亮带 */
+.ns-peak-band {
+  fill: var(--accent-soft); opacity: 0;
+  animation: ns-fade-soft 700ms var(--ease-quart) 240ms forwards;
+}
+.is-flip .ns-peak-band { opacity: 0.5; transition: opacity 500ms ease; }
+@keyframes ns-fade-soft { to { opacity: 1; } }
+.ns-peak-label {
+  fill: var(--text-mute); font-size: 15px; text-anchor: middle; letter-spacing: 0.04em;
+}
+
+/* 门槛线 —— flip 后点亮 */
+.ns-threshold {
+  stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 7;
+  opacity: 0; transition: opacity 600ms ease 520ms;
+}
+.is-flip .ns-threshold { opacity: 0.6; }
+.ns-threshold-label {
+  fill: var(--accent); font-size: 14px; text-anchor: end; letter-spacing: 0.08em;
+  opacity: 0; transition: opacity 600ms ease 620ms;
+}
+.is-flip .ns-threshold-label { opacity: 0.85; }
+
+/* leak 曲线（下行 · 灰） —— 默认自画；flip 后淡出 */
+.ns-path { fill: none; stroke-linecap: round; }
+.ns-path--leak {
+  stroke: var(--text-mute); stroke-width: 3;
+  stroke-dasharray: 1100; stroke-dashoffset: 1100;
+  animation: ns-draw 1200ms var(--ease-quart) 200ms forwards;
+  opacity: 0.7;
+  transition: opacity 480ms ease;
+}
+.is-flip .ns-path--leak { opacity: 0.14; }
+@keyframes ns-draw { to { stroke-dashoffset: 0; } }
+
+/* throughput 曲线（上行 · 焦点色） —— 仅 flip 后出现并自画 */
+.ns-path--flow {
+  stroke: var(--accent); stroke-width: 3.6;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+  stroke-dasharray: 1100; stroke-dashoffset: 1100;
+  opacity: 0;
+}
+.is-flip .ns-path--flow {
+  opacity: 1;
+  animation: ns-draw 1150ms var(--ease-quart) 240ms forwards;
+}
+
+/* leak 终点 ✕ */
+.ns-leak-end { opacity: 0; animation: ns-fade-in 500ms ease 1300ms forwards; }
+.is-flip .ns-leak-end { opacity: 0; transition: opacity 360ms ease; }
+.ns-leak-x { stroke: var(--text-mute); stroke-width: 2.4; stroke-linecap: round; }
+.ns-leak-end-label { fill: var(--text-mute); font-size: 15px; text-anchor: middle; }
+@keyframes ns-fade-in { to { opacity: 1; } }
+
+/* throughput 终点脉冲点 —— flip 后越过门槛 */
+.ns-flow-end { opacity: 0; }
+.is-flip .ns-flow-end { animation: ns-fade-in 520ms ease 1260ms forwards; }
+.ns-flow-dot { fill: var(--accent); }
+.ns-flow-halo {
+  fill: var(--accent); opacity: 0.22;
+  transform-box: fill-box; transform-origin: center;
+  animation: ns-halo 2.1s ease-in-out infinite;
+}
+@keyframes ns-halo {
+  0%, 100% { transform: scale(0.6); opacity: 0.34; }
+  50%      { transform: scale(1.35); opacity: 0.04; }
+}
+.ns-flow-end-label {
+  fill: var(--accent); font-size: 15px; text-anchor: middle; letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+/* ════════════════ Scene B · 灵魂 vs 外壳 → 灵魂迁移 ════════════════ */
+.ns-b {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 60px 100px;
+}
+
+/* 灵魂 vs 外壳对照 */
+.ns-shell { display: flex; flex-direction: column; align-items: center; gap: 52px; text-align: center; }
+.ns-kick { display: flex; align-items: center; justify-content: center; }
+.ns-shell-row {
+  display: flex; align-items: stretch; justify-content: center; gap: 28px;
+  max-width: 1480px;
+}
+.ns-shell-no, .ns-shell-yes {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 34px 40px; border-radius: 6px; text-align: left;
+  flex: 1; justify-content: center;
+}
+.ns-shell-no {
+  border: 1px solid var(--rule); background: var(--surface);
+  opacity: 0.62;
+}
+.ns-shell-yes {
+  border: 1px solid var(--accent);
+  background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 62%), var(--surface-2);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 22px 60px rgba(0, 0, 0, 0.46);
+}
+.ns-shell-tag { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; }
+.ns-shell-no .ns-shell-tag { color: var(--text-mute); }
+.ns-shell-yes .ns-shell-tag { color: var(--accent); }
+.ns-shell-text { font-size: 38px; font-weight: 700; line-height: 1.3; }
+.ns-shell-no .ns-shell-text {
+  color: var(--text-2);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-faint);
+  text-decoration-thickness: 2px;
+}
+.ns-shell-yes .ns-shell-text { color: var(--text); }
+.ns-shell-arrow {
+  flex: 0 0 auto; align-self: center; position: relative;
+  width: 46px; height: 2px; background: var(--accent);
+}
+.ns-shell-arrow::after {
+  content: ""; position: absolute; right: -1px; top: 50%;
+  width: 10px; height: 10px; transform: translateY(-50%) rotate(45deg);
+  border-top: 2px solid var(--accent); border-right: 2px solid var(--accent);
+}
+
+/* 灵魂迁移 */
+.ns-soul { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.ns-soul-stage { position: relative; width: 100%; display: flex; justify-content: center; }
+.ns-soul-cap { font-size: 28px; color: var(--text-2); }
+
+.ns-soul-svg { display: block; overflow: visible; }
+
+/* 连线 —— 自画 */
+.ns-link {
+  fill: none; stroke: var(--accent); stroke-width: 2;
+  stroke-dasharray: 1000; stroke-dashoffset: 1000;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 5px var(--accent-glow));
+}
+.ns-link-0 { animation: ns-draw 760ms var(--ease-quart) 520ms forwards; }
+.ns-link-1 { animation: ns-draw 760ms var(--ease-quart) 740ms forwards; }
+.ns-link-2 { animation: ns-draw 760ms var(--ease-quart) 960ms forwards; }
+
+/* 灵魂"搬家"脉冲 */
+.ns-pulse { fill: var(--accent); filter: drop-shadow(0 0 7px var(--accent-glow)); }
+
+/* 灵魂节点 */
+.ns-soul-node { opacity: 0; animation: ns-fade-in 600ms var(--ease-quart) 200ms forwards; }
+.ns-soul-core {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 26px var(--accent-glow));
+  transform-box: fill-box; transform-origin: center;
+  animation: ns-breathe 3.6s ease-in-out infinite;
+}
+.ns-soul-halo {
+  fill: var(--accent); opacity: 0.16;
+  transform-box: fill-box; transform-origin: center;
+  animation: ns-halo 2.6s ease-in-out infinite;
+}
+.ns-soul-ring {
+  fill: none; stroke: var(--accent-soft); stroke-width: 1; stroke-dasharray: 3 7;
+  transform-box: fill-box; transform-origin: center;
+  animation: ns-spin 22s linear infinite;
+}
+@keyframes ns-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+@keyframes ns-spin { to { transform: rotate(360deg); } }
+.ns-soul-glyph {
+  fill: var(--shell); font-size: 22px; font-weight: 700; text-anchor: middle;
+}
+.ns-soul-sub { fill: var(--text-mute); font-size: 12px; letter-spacing: 0.18em; text-anchor: middle; }
+
+/* 身体轮廓 —— 依次浮现，越长越大 */
+.ns-body { opacity: 0; }
+.ns-body-0 { animation: ns-body-in 560ms var(--ease-quart) 760ms forwards; }
+.ns-body-1 { animation: ns-body-in 560ms var(--ease-quart) 980ms forwards; }
+.ns-body-2 { animation: ns-body-in 560ms var(--ease-quart) 1200ms forwards; }
+@keyframes ns-body-in { from { opacity: 0; } to { opacity: 1; } }
+.ns-body-head { fill: none; stroke: var(--text-2); stroke-width: 2.4; }
+.ns-body-torso { fill: var(--surface-3); stroke: var(--text-2); stroke-width: 2.4; }
+.ns-body-2 .ns-body-head { stroke: var(--accent); }
+.ns-body-2 .ns-body-torso {
+  stroke: var(--accent);
+  fill: var(--accent-soft);
+}
+.ns-body-age { fill: var(--text-mute); font-size: 15px; text-anchor: middle; letter-spacing: 0.06em; }
+.ns-body-2 .ns-body-age { fill: var(--accent); }
+
+/* ════════════════ Scene C · 视角反转 · 吞吐量 ════════════════ */
+.ns-c {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 70px 120px; text-align: center;
+}
+
+/* reframe */
+.ns-reframe { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.ns-reframe-head { font-size: 50px; line-height: 1.36; font-weight: 700; color: var(--text); }
+.ns-reframe-strong { font-size: 76px; font-weight: 700; color: var(--text); line-height: 1.1; margin-top: 6px; }
+.ns-reframe-meter {
+  display: inline-flex; align-items: baseline; gap: 14px;
+  margin-top: 30px; padding: 14px 28px;
+  border: 1px solid var(--rule); border-radius: var(--r-pill);
+  background: var(--surface-2);
+}
+.ns-meter-label { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-mute); }
+.ns-meter-num { color: var(--accent); font-weight: 900; font-size: 38px; line-height: 1; }
+.ns-meter-unit { font-size: 14px; letter-spacing: 0.08em; color: var(--text-mute); }
+
+/* throughput 大字 */
+.ns-throughput {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.ns-tp-glow {
+  position: absolute; top: 50%; left: 50%; width: 1200px; height: 680px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 58%);
+  pointer-events: none;
+}
+.ns-tp-line { position: relative; font-size: 72px; font-weight: 700; color: var(--text); line-height: 1.16; }
+.ns-tp-strong {
+  position: relative; font-size: 150px; font-weight: 700; color: var(--text);
+  line-height: 1.04;
+}
+
+/* ════════════════ Scene D · 北极星金句 → 品牌锁版 ════════════════ */
+.ns-d {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 70px 120px; text-align: center;
+}
+.ns-d-glow {
+  position: absolute; top: 50%; left: 50%; width: 1400px; height: 820px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at 50% 50%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* 北极星金句 + 视频位 */
+.ns-star { position: relative; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+.ns-star-kick { display: flex; align-items: center; justify-content: center; }
+.ns-star-quote {
+  display: flex; flex-direction: column; gap: 12px;
+  font-size: 62px; line-height: 1.24; font-weight: 700; color: var(--text);
+}
+.ns-star-l1, .ns-star-l2 { display: block; }
+
+/* 视频位占位卡 · 16:9 虚线框 */
+.ns-video-wrap { display: flex; justify-content: center; }
+.ns-video {
+  position: relative;
+  width: 560px; aspect-ratio: 16 / 9;
+  border: 1.5px dashed var(--rule);
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.012) 0 18px, transparent 18px 36px),
+    var(--surface);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 22px;
+}
+.ns-video-corner { position: absolute; width: 22px; height: 22px; border: 1.5px solid var(--accent); opacity: 0.55; }
+.ns-video-corner.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.ns-video-corner.tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.ns-video-corner.bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.ns-video-corner.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+.ns-video-play {
+  width: 76px; height: 76px; border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  display: grid; place-items: center;
+  box-shadow: 0 0 26px var(--accent-soft);
+}
+.ns-video-tri {
+  width: 0; height: 0; margin-left: 5px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 24px solid var(--accent);
+}
+.ns-video-label {
+  font-size: 15px; letter-spacing: 0.1em; color: var(--text-mute);
+}
+
+/* 落幕金句 + 品牌锁版 */
+.ns-finale { position: relative; display: flex; flex-direction: column; align-items: center; }
+.ns-finale-quote {
+  display: flex; flex-direction: column; gap: 10px;
+  font-size: 96px; line-height: 1.16; font-weight: 700; color: var(--text);
+}
+.ns-finale-l1, .ns-finale-l2 { display: block; }
+.ns-brand-row {
+  position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 22px;
+  margin-top: 58px; flex-wrap: wrap;
+}
+.ns-brand { font-size: 46px; color: var(--text); letter-spacing: 0.01em; }
+.ns-brand-div { width: 1px; height: 26px; background: var(--rule); }
+.ns-brand-tag { font-size: 17px; letter-spacing: 0.06em; color: var(--text-mute); }
