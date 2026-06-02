@@ -1,23 +1,27 @@
+import { useEffect, useRef } from "react";
 import { Reveal } from "../../shared/Reveal";
 import { SceneFade } from "../../shared/SceneFade";
 import type { ChapterStepProps } from "../../registry/types";
 import "./Vision.css";
 
 const COEXIST = `${import.meta.env.BASE_URL}img/coexist-city.png`;
+const FAREWELL = `${import.meta.env.BASE_URL}video/ai-farewell.mp4`;
 
 /**
- * 02 · vision — 愿景·一件几乎必然发生的事（7 step / 4 幕）
+ * 02 · vision — 愿景·一件几乎必然发生的事（8 step / 5 幕）
  *   A(step0-1) 共生情感底 + "像宝可梦那样的世界" → 叠 "我们赌这一天会来"
  *   B(step2-3) "难反驳"论断（反方对照）→ 焦点反转 "门槛不是技术，是接受度"
  *   C(step4-5) 自画接受度 S 曲线（一代人慢慢长出来）→ 点亮 互联网/智能手机 节点
  *   D(step6)   tight 词替换锁版 "数字原住民 → 智能生命原住民"
+ *   E(step7)   视频证据 —— 孩子已和 AI 朋友告别，接受已发生【视频位】
  */
 export default function Vision({ step }: ChapterStepProps) {
   const at = (n: number) => step >= n;
   const sceneA = step <= 1;
   const sceneB = step >= 2 && step <= 3;
   const sceneC = step >= 4 && step <= 5;
-  const sceneD = step >= 6;
+  const sceneD = step === 6;
+  const sceneE = step >= 7;
 
   return (
     <div className="vi-root">
@@ -179,6 +183,82 @@ export default function Vision({ step }: ChapterStepProps) {
           </Reveal>
         </div>
       </SceneFade>
+
+      {/* ═══════════ Scene E · 视频证据（接受已发生）【视频位】 ═══════════ */}
+      <SceneFade active={sceneE}>
+        <div className="vi-e">
+          <div className="vi-e-stage">
+            <Reveal kind="scale" duration={820} className="vi-e-frame">
+              <VideoProof active={sceneE} />
+            </Reveal>
+            <div className="vi-e-copy">
+              <Reveal kind="fall" duration={600} className="vi-eyebrow mono">
+                <span className="dot-accent" />
+                &nbsp;&nbsp;ALREADY HAPPENING · 已经在发生
+              </Reveal>
+              <Reveal
+                kind="blur"
+                duration={860}
+                delay={180}
+                className="vi-e-cap serif-cn"
+              >
+                一个孩子，正在和她的
+                <br />
+                <span className="vi-em">AI 朋友</span>告别。
+              </Reveal>
+              <Reveal kind="rise" duration={720} delay={540} className="vi-e-sub">
+                她已经接受了它的存在。
+                <br />
+                缺的，只是一个<span className="vi-em">永远不说再见</span>的身体。
+              </Reveal>
+              <Reveal
+                kind="rise"
+                duration={680}
+                delay={820}
+                className="vi-e-foot mono"
+              >
+                接受度，不在未来 —— 就在此刻。
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </SceneFade>
+    </div>
+  );
+}
+
+/**
+ * 视频证据播放器 —— 进入该步自动播放（带声，原生控件兜底）。
+ * 整块标记 data-no-advance：点击视频 / 控件不会推进舞台。
+ * 文件位：public/video/ai-farewell.mp4（缺文件时为黑场，放入即播）。
+ */
+function VideoProof({ active }: { active: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (active) {
+      v.currentTime = 0;
+      // 进入即播；带声自动播放被浏览器拦截时，退回原生控件手动播放
+      void v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  }, [active]);
+  return (
+    <div className="vi-e-screen" data-no-advance>
+      <span className="vi-corner tl" />
+      <span className="vi-corner tr" />
+      <span className="vi-corner bl" />
+      <span className="vi-corner br" />
+      <video
+        ref={ref}
+        className="vi-e-video"
+        src={FAREWELL}
+        controls
+        playsInline
+        preload="auto"
+      />
     </div>
   );
 }

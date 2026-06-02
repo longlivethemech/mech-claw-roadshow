@@ -1,0 +1,68 @@
+/* ════════════════════════════════════════════════════════════════════
+ * Chapter 10 · studio — prefix .st-  (片尾·工作室署名卡)
+ * ════════════════════════════════════════════════════════════════════ */
+
+.st-root { position: absolute; inset: 0; overflow: hidden; display: grid; place-items: center; }
+.st-em { color: var(--accent); font-style: normal; }
+
+/* ── 余烬氛围（与开场/北极星呼应） ── */
+.st-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.st-ember {
+  position: absolute; bottom: -30px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 188, 110, 0.9) 0%, transparent 70%);
+  opacity: 0;
+  animation-name: st-drift; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+@keyframes st-drift {
+  0%   { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+  12%  { opacity: 0.5; }
+  85%  { opacity: 0.3; }
+  100% { transform: translateY(-1180px) translateX(30px) scale(1.05); opacity: 0; }
+}
+.st-ember-0 { left: 12%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: -2s;  }
+.st-ember-1 { left: 24%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: -7s;  }
+.st-ember-2 { left: 37%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: -12s; }
+.st-ember-3 { left: 49%; width: 6px; height: 6px; animation-duration: 22s; animation-delay: -4s;  }
+.st-ember-4 { left: 61%; width: 5px; height: 5px; animation-duration: 21s; animation-delay: -15s; }
+.st-ember-5 { left: 73%; width: 7px; height: 7px; animation-duration: 26s; animation-delay: -9s;  }
+.st-ember-6 { left: 85%; width: 4px; height: 4px; animation-duration: 19s; animation-delay: -17s; }
+.st-ember-7 { left: 93%; width: 5px; height: 5px; animation-duration: 24s; animation-delay: -5s;  }
+
+.st-glow {
+  position: absolute; top: 50%; left: 50%; width: 1500px; height: 860px;
+  transform: translate(-50%, -50%);
+  /* 柔和暖洗，避免在 logo 后形成亮斑而衬出反相方块 */
+  background: radial-gradient(ellipse at 50% 58%, rgba(255, 154, 61, 0.08) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── 署名卡 ── */
+.st-card {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 30px;
+}
+.st-logo-wrap { line-height: 0; }
+.st-logo {
+  max-width: 460px; max-height: 220px; width: auto; height: auto; object-fit: contain;
+  /* 白底黑线稿 logo → invert 成白线稿 + lighten 抠掉黑底，干净落在暗场上 */
+  filter: invert(1);
+  mix-blend-mode: lighten;
+}
+
+/* logo 占位框（无图时） */
+.st-logo-ph { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.st-logo-ph-box {
+  width: 300px; height: 156px;
+  border: 1.5px dashed var(--rule); border-radius: 8px;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.015) 0 16px, transparent 16px 32px);
+}
+.st-logo-ph-t { font-size: 14px; letter-spacing: 0.1em; color: var(--text-mute); }
+
+.st-rule { width: 72px; height: 2px; background: var(--accent); box-shadow: 0 0 16px var(--accent-glow); }
+
+.st-slogan { font-size: 52px; font-weight: 700; color: var(--text); line-height: 1.3; max-width: 1100px; }
+.st-tag {
+  font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-mute); margin-top: 4px;
+}

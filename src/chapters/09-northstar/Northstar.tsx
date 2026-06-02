@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Reveal } from "../../shared/Reveal";
 import { NumberTicker } from "../../shared/NumberTicker";
 import { SceneFade } from "../../shared/SceneFade";
@@ -5,6 +6,7 @@ import type { ChapterStepProps } from "../../registry/types";
 import "./Northstar.css";
 
 const EMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const HELLO = `${import.meta.env.BASE_URL}video/robot-hello.mp4`;
 
 /**
  * 09 · northstar — 北极星·收尾（8 step / 4 幕）· 全片落幕
@@ -160,21 +162,28 @@ export default function Northstar({ step }: ChapterStepProps) {
 
           {!at(7) && (
             <div className="ns-star">
-              <Reveal kind="fall" duration={560} className="ns-star-kick mono">
-                <span className="dot-accent" />
-                &nbsp;&nbsp;NORTH STAR · 我们想让世界记住的一句话
-              </Reveal>
-              <div className="ns-star-quote serif-cn">
-                <Reveal kind="blur" duration={1000} className="ns-star-l1">
-                  人与<span className="ns-em">智能生命</span>，互相付出，并肩前行
-                </Reveal>
-                <Reveal kind="blur" duration={1000} delay={520} className="ns-star-l2">
-                  ——就像<span className="ns-em">宝可梦的世界</span>那样。
-                </Reveal>
-              </div>
-              <Reveal kind="fade" duration={760} delay={1040} className="ns-video-wrap">
+              <Reveal
+                kind="scale"
+                duration={820}
+                delay={160}
+                className="ns-video-wrap"
+              >
                 <VideoSlot />
               </Reveal>
+              <div className="ns-star-copy">
+                <Reveal kind="fall" duration={560} className="ns-star-kick mono">
+                  <span className="dot-accent" />
+                  &nbsp;&nbsp;NORTH STAR · 我们想让世界记住的一句话
+                </Reveal>
+                <div className="ns-star-quote serif-cn">
+                  <Reveal kind="blur" duration={1000} delay={220} className="ns-star-l1">
+                    人与<span className="ns-em">智能生命</span>，互相付出，并肩前行
+                  </Reveal>
+                  <Reveal kind="blur" duration={1000} delay={680} className="ns-star-l2">
+                    ——就像<span className="ns-em">宝可梦的世界</span>那样。
+                  </Reveal>
+                </div>
+              </div>
             </div>
           )}
 
@@ -357,22 +366,35 @@ function Body({ scale }: { scale: number }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 视频位占位卡 · 机器人打招呼（待补）
- *   16:9 虚线框 + CSS 画的播放三角 + 文字标注。不用 emoji / 不用 fake。
+ * 视频位 · 机器人打招呼（robot-hello.mp4）
+ *   进入 step6 即播（带声，原生控件兜底）；data-no-advance 点击不翻页。
+ *   文件位：public/video/robot-hello.mp4（缺文件时为黑场，放入即播）。
  * ───────────────────────────────────────────────────────────────────── */
 function VideoSlot() {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.currentTime = 0;
+    void v.play().catch(() => {});
+    return () => {
+      v.pause();
+    };
+  }, []);
   return (
-    <div className="ns-video">
+    <div className="ns-video" data-no-advance>
       <span className="ns-video-corner tl" aria-hidden />
       <span className="ns-video-corner tr" aria-hidden />
       <span className="ns-video-corner bl" aria-hidden />
       <span className="ns-video-corner br" aria-hidden />
-      <span className="ns-video-play" aria-hidden>
-        <span className="ns-video-tri" />
-      </span>
-      <span className="ns-video-label mono">
-        【视频位 · 机器人打招呼 · 待补】
-      </span>
+      <video
+        ref={ref}
+        className="ns-video-el"
+        src={HELLO}
+        controls
+        playsInline
+        preload="auto"
+      />
     </div>
   );
 }

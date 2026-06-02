@@ -1,0 +1,38 @@
+/* 片头厂牌闪屏 —— 一次性揭幕，结束后不挡交互 */
+.start-ident {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 90% at 50% 46%, rgba(255, 154, 61, 0.07) 0%, transparent 56%),
+    var(--shell);
+  pointer-events: none;
+  animation: si-veil 1.35s ease forwards;
+}
+@keyframes si-veil {
+  0%, 62% { opacity: 1; }
+  100%    { opacity: 0; visibility: hidden; }
+}
+
+.start-ident-logo {
+  width: min(340px, 24vw);
+  height: auto;
+  /* logo 为白底黑线稿 → invert 成白线稿，lighten 抠掉黑底，融入暗场 */
+  mix-blend-mode: lighten;
+  animation: si-logo 1.35s ease forwards;
+}
+@keyframes si-logo {
+  0%   { opacity: 0; transform: scale(0.94); filter: invert(1) blur(10px); }
+  22%  { opacity: 1; transform: scale(1);    filter: invert(1) blur(0); }
+  54%  { opacity: 1; transform: scale(1);    filter: invert(1); }
+  80%  { opacity: 0; transform: scale(1.03); filter: invert(1) blur(5px); }
+  100% { opacity: 0; filter: invert(1); }
+}
+
+/* 降动效偏好：跳过 logo，仅做极短揭幕 */
+@media (prefers-reduced-motion: reduce) {
+  .start-ident { animation: si-veil 0.5s ease forwards; }
+  .start-ident-logo { display: none; }
+}

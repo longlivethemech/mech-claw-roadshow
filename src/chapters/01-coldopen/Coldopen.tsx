@@ -32,8 +32,18 @@ export default function Coldopen({ step }: ChapterStepProps) {
       <SceneFade active={sceneA}>
         <div className="co-a">
           <div className="co-orb" aria-hidden>
+            {/* 心跳脉冲环：自核心向外扩散后消散（生命的"脉搏"） */}
+            <span className="co-orb-pulse co-orb-pulse-1" />
+            <span className="co-orb-pulse co-orb-pulse-2" />
+            <span className="co-orb-pulse co-orb-pulse-3" />
+            {/* 呼吸光晕 */}
+            <span className="co-orb-corona" />
+            {/* 不规则闪烁的炽热核心（活的，不是平滑的球） */}
             <span className="co-orb-core" />
-            <span className="co-orb-ring" />
+            {/* 升腾的火星 */}
+            <span className="co-orb-spark co-orb-spark-1" />
+            <span className="co-orb-spark co-orb-spark-2" />
+            <span className="co-orb-spark co-orb-spark-3" />
           </div>
           <Reveal kind="blur" duration={1100} className="co-a-line serif-cn">
             未来，一定会有一种<span className="co-em">「活的」</span>机器人，

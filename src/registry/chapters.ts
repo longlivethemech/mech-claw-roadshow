@@ -17,6 +17,8 @@ import Versus from "../chapters/08-vs/Versus";
 import { narrations as versusNarrations } from "../chapters/08-vs/narrations";
 import Northstar from "../chapters/09-northstar/Northstar";
 import { narrations as northstarNarrations } from "../chapters/09-northstar/narrations";
+import Studio from "../chapters/10-studio/Studio";
+import { narrations as studioNarrations } from "../chapters/10-studio/narrations";
 
 /**
  * Order = order of presentation.
@@ -83,5 +85,11 @@ export const CHAPTERS: ChapterDef[] = [
     title: "北极星·收尾",
     narrations: northstarNarrations,
     Component: Northstar,
+  },
+  {
+    id: "studio",
+    title: "工作室",
+    narrations: studioNarrations,
+    Component: Studio,
   },
 ];

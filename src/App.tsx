@@ -6,6 +6,7 @@ import "./styles/animations.css";
 import { useCallback } from "react";
 import { AutoStartGate } from "./components/AutoStartGate";
 import { AutoToggle } from "./components/AutoToggle";
+import { StartIdent } from "./components/StartIdent";
 import { ProgressBar } from "./components/ProgressBar";
 import { Stage } from "./components/Stage";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
@@ -68,6 +69,7 @@ export default function App() {
         visible={mode === "auto" && !autoStarted}
         onStart={() => setAutoStarted(true)}
       />
+      <StartIdent />
     </>
   );
 }

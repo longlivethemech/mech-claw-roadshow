@@ -14,7 +14,7 @@ export type RevealKind =
 type AsTag = "div" | "span" | "h1" | "h2" | "h3" | "p" | "em" | "strong";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   delay?: number;
   duration?: number;
   kind?: RevealKind;

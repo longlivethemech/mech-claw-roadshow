@@ -5,7 +5,7 @@ import type { ChapterDef } from "../registry/types";
  * Bump this when chapter step counts / structure change so old persisted
  * cursors don't land mid-removed-step.
  */
-const STORAGE_KEY = "presentation-cursor-mechclaw-v3";
+const STORAGE_KEY = "presentation-cursor-mechclaw-v5";
 
 export type Cursor = { chapter: number; step: number };
 
