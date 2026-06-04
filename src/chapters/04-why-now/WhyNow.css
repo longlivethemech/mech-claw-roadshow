@@ -200,7 +200,17 @@
 }
 
 /* ── 三节点流程 ── */
-.wn-flow-wrap { width: 100%; display: flex; justify-content: center; }
+.wn-flow-wrap {
+  width: 100%; display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+}
+/* ⑭ 组件示例标注：点明这只是「会看」一项的一个组件链，相机非全部 */
+.wn-flow-cap {
+  font-size: 14px; letter-spacing: 0.1em; color: var(--text-mute);
+}
+.wn-flow-cap::before {
+  content: "↓ "; color: var(--accent);
+}
 .wn-flow {
   display: flex; align-items: stretch; justify-content: center;
   gap: 0; width: 100%; max-width: 1180px;
@@ -308,15 +318,35 @@
   margin: 0;
 }
 .wn-quote-by {
-  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
-  margin-top: 26px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  margin-top: 28px;
 }
-.wn-quote-name { font-size: 28px; font-weight: 700; color: var(--text); }
+.wn-quote-name { font-size: 24px; font-weight: 700; color: var(--text); }
 .wn-quote-meta {
-  font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-size: 13px; letter-spacing: 0.06em;
   color: var(--text-mute);
 }
-.wn-quote-by::before {
-  content: ""; width: 22px; height: 2px; background: var(--accent);
-  align-self: center; margin-right: -4px;
+/* ⑮ 背书人头像卡（王弢 · 师从 · 吴恩达） */
+.wn-endorser { display: flex; align-items: center; gap: 14px; }
+.wn-endorser-avatar {
+  position: relative; flex: 0 0 auto;
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center; overflow: hidden;
+  border: 1px solid var(--rule); background: var(--surface-2);
+}
+.wn-endorser-ph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 24px; color: var(--accent);
+}
+.wn-endorser-img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.wn-endorser-img.is-missing { visibility: hidden; }
+.wn-endorser-id { display: flex; flex-direction: column; gap: 4px; }
+.wn-endorser-link {
+  flex: 0 0 auto; font-size: 12px; letter-spacing: 0.16em;
+  color: var(--text-faint); text-transform: uppercase;
+  padding: 0 2px;
 }

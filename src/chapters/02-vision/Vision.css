@@ -54,7 +54,7 @@
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
   /* 图偏粗糙：压暗 + 降饱和，仅作氛围层 */
-  filter: brightness(0.42) saturate(0.78) contrast(1.04);
+  filter: brightness(0.58) saturate(0.82) contrast(1.04);
   transform-origin: 58% 46%;
   animation: vi-kenburns 22s ease-out both;
 }
@@ -211,16 +211,26 @@
 }
 .vi-node-t--below { fill: var(--text); }
 
-/* lit 后点亮（两节点错峰） */
-.vi-nodes.is-lit .vi-node-1 .vi-node-stem { animation: vi-fade-soft 400ms ease 80ms forwards; }
-.vi-nodes.is-lit .vi-node-1 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 180ms forwards; }
-.vi-nodes.is-lit .vi-node-1 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 320ms infinite; }
-.vi-nodes.is-lit .vi-node-1 .vi-node-t    { animation: vi-fade-up 520ms ease 300ms forwards; }
+/* lit 后点亮（四节点由左到右错峰：计算机→互联网→智能手机→LLM） */
+.vi-nodes.is-lit .vi-node-3 .vi-node-stem { animation: vi-fade-soft 400ms ease 20ms forwards; }
+.vi-nodes.is-lit .vi-node-3 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 120ms forwards; }
+.vi-nodes.is-lit .vi-node-3 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 260ms infinite; }
+.vi-nodes.is-lit .vi-node-3 .vi-node-t    { animation: vi-fade-up 520ms ease 240ms forwards; }
 
-.vi-nodes.is-lit .vi-node-2 .vi-node-stem { animation: vi-fade-soft 400ms ease 320ms forwards; }
-.vi-nodes.is-lit .vi-node-2 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 420ms forwards; }
-.vi-nodes.is-lit .vi-node-2 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 560ms infinite; }
-.vi-nodes.is-lit .vi-node-2 .vi-node-t    { animation: vi-fade-up 520ms ease 540ms forwards; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-stem { animation: vi-fade-soft 400ms ease 200ms forwards; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 300ms forwards; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 440ms infinite; }
+.vi-nodes.is-lit .vi-node-1 .vi-node-t    { animation: vi-fade-up 520ms ease 420ms forwards; }
+
+.vi-nodes.is-lit .vi-node-2 .vi-node-stem { animation: vi-fade-soft 400ms ease 380ms forwards; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 480ms forwards; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 620ms infinite; }
+.vi-nodes.is-lit .vi-node-2 .vi-node-t    { animation: vi-fade-up 520ms ease 600ms forwards; }
+
+.vi-nodes.is-lit .vi-node-4 .vi-node-stem { animation: vi-fade-soft 400ms ease 560ms forwards; }
+.vi-nodes.is-lit .vi-node-4 .vi-node-dot  { animation: vi-pop 520ms var(--ease-overshoot) 660ms forwards; }
+.vi-nodes.is-lit .vi-node-4 .vi-node-halo { animation: vi-halo 2.2s ease-in-out 800ms infinite; }
+.vi-nodes.is-lit .vi-node-4 .vi-node-t    { animation: vi-fade-up 520ms ease 780ms forwards; }
 
 @keyframes vi-pop { to { opacity: 1; transform: scale(1); } }
 @keyframes vi-halo {
@@ -297,6 +307,48 @@
 .vi-d-brand-name { font-size: 40px; color: var(--text); letter-spacing: 0.01em; }
 .vi-d-brand-div { width: 1px; height: 24px; background: var(--rule); }
 .vi-d-brand-tag { font-size: 16px; letter-spacing: 0.06em; color: var(--text-mute); }
+/* ⑥ 前哨战加重：从小字里拎出，accent 高亮 + 放大 + 辉光脉冲 */
+.vi-d-vanguard {
+  color: var(--accent); font-weight: 700;
+  font-size: 23px; letter-spacing: 0.1em;
+  margin-left: 2px; padding: 0 2px;
+  text-shadow: 0 0 20px var(--accent-glow);
+  animation: vi-vanguard-pulse 2.6s ease-in-out 1200ms infinite;
+}
+@keyframes vi-vanguard-pulse {
+  0%, 100% { text-shadow: 0 0 16px var(--accent-glow); }
+  50%      { text-shadow: 0 0 30px var(--accent-glow); }
+}
+
+/* ㉕ 愿景示意图对（等身陪伴 · fauna 概念参考） */
+.vi-d-vision {
+  position: relative; margin-top: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.vi-d-vision-eyebrow {
+  font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.vi-d-vision-row { display: flex; gap: 28px; }
+.vi-d-vfig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.vi-d-vframe {
+  position: relative; width: 300px; height: 169px; /* 16:9 */
+  display: grid; place-items: center; overflow: hidden;
+  border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--surface);
+}
+.vi-d-vph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+.vi-d-vimg {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.vi-d-vimg.is-missing { visibility: hidden; }
+.vi-d-vcap { font-size: 15px; color: var(--text-2); }
+.vi-d-vision-note { font-size: 12px; color: var(--text-faint); letter-spacing: 0.04em; }
 
 /* ════════════════ Scene E · 视频证据（接受已发生）【视频位】 ════════════════ */
 .vi-e {

@@ -288,6 +288,25 @@
   font-family: var(--font-display-en); font-size: 40px; color: var(--accent);
 }
 
+/* ════════════════ Scene C2 · 儿童线（独立一幕，卡片放大居中） ════════════════ */
+.mk-c2 {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 32px; padding: 110px 100px 80px;
+}
+.mk-c2-h {
+  font-size: 48px; font-weight: 700; color: var(--text);
+  line-height: 1.3; text-align: center;
+}
+.mk-c2 .mk-kids-row { gap: 28px; margin-top: 10px; }
+.mk-c2 .mk-kid-card { width: 430px; padding: 22px 26px; gap: 20px; }
+.mk-c2 .mk-kid-img { width: 118px; height: 118px; }
+.mk-c2 .mk-kid-name { font-size: 26px; }
+.mk-c2 .mk-kid-tag { font-size: 16px; }
+.mk-c2 .mk-kid-sub { font-size: 13px; }
+.mk-c2 .mk-kid-gap { width: 390px; }
+.mk-c2 .mk-gap-mark { width: 118px; height: 118px; font-size: 54px; }
+
 /* ════════════════ Scene D · 四圆 Venn ════════════════ */
 .mk-d {
   position: absolute; inset: 0;

@@ -13,7 +13,7 @@ const COLS: Col[] = [
   { key: "kids", name: "儿童机器人", sub: "Miko / Luka / BubblePal", img: "miko3.jpg" },
   { key: "speaker", name: "聊天音箱", sub: "已逝标杆 · Moxie", img: "moxie.webp" },
   { key: "lovot", name: "高端陪伴", sub: "LOVOT · $3,300+", img: "lovot.jpg" },
-  { key: "us", name: "mech-claw", sub: "给 6 岁孩子的伙伴", us: true },
+  { key: "us", name: "mech-claw", sub: "给 5–10 岁孩子的伙伴", us: true },
 ];
 
 /** 单元格状态：y=具备 / n=没有 / p=部分·渐进 */

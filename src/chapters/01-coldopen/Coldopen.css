@@ -130,6 +130,33 @@
 }
 
 .co-a-line { font-size: 56px; line-height: 1.42; font-weight: 700; color: var(--text); max-width: 1180px; }
+
+/* ㉖ 先验概念 IP 小图条（皮卡丘 / 哆啦A梦 / 数码宝贝） */
+.co-ip-strip { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.co-ip-lead {
+  font-size: 15px; letter-spacing: 0.18em; color: var(--text-mute);
+}
+.co-ip-row { display: flex; align-items: flex-start; gap: 38px; }
+.co-ip-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.co-ip-frame {
+  position: relative; width: 104px; height: 104px;
+  display: grid; place-items: center;
+  border: 1px solid var(--rule); border-radius: 12px;
+  background: var(--surface); overflow: hidden;
+}
+.co-ip-ph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 30px; color: var(--text-faint);
+}
+.co-ip-img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.co-ip-img.is-missing { visibility: hidden; }
+.co-ip-name {
+  font-family: var(--font-display-cn); font-weight: 700;
+  font-size: 16px; color: var(--text-2);
+}
 .co-tl-wrap {
   min-height: 150px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;

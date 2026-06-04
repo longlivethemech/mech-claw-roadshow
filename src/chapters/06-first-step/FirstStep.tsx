@@ -1,5 +1,4 @@
 import { Reveal } from "../../shared/Reveal";
-import { NumberTicker } from "../../shared/NumberTicker";
 import { SceneFade } from "../../shared/SceneFade";
 import type { ChapterStepProps } from "../../registry/types";
 import "./FirstStep.css";
@@ -7,8 +6,8 @@ import "./FirstStep.css";
 const CHILD = `${import.meta.env.BASE_URL}img/child-companion.png`;
 
 /**
- * 06 · first-step — 我们的第一步·6 岁孩子（7 step / 4 幕）
- *   A(step0-1) child 情感底 + "第一步很具体：六岁左右的孩子"(blur)
+ * 06 · first-step — 我们的第一步·5–10 岁孩子（7 step / 4 幕）
+ *   A(step0-1) child 情感底 + "第一步很具体：5–10 岁的孩子"(blur)
  *              → Moxie 验证过的路，用 2026 的能力重做一遍(rise)
  *   B(step2-5) 中心件：自绘"杠杆 + 支点" —— 支点精准卡在杠杆点上
  *              · step2 杠杆梁画出、支点点亮"精准打在杠杆点上"
@@ -53,24 +52,17 @@ export default function FirstStep({ step }: ChapterStepProps) {
             <Reveal kind="blur" duration={1050} className="fs-a-h serif-cn">
               我们的第一步，<span className="fs-em">很具体</span>。
               <br />
-              <NumberTicker
-                to={6}
-                from={0}
-                decimals={0}
-                duration={900}
-                delay={260}
-                className="fs-a-num display-en"
-              />
-              <span className="fs-a-age"> 岁左右的孩子。</span>
+              <span className="fs-a-num display-en">5–10</span>
+              <span className="fs-a-age"> 岁的孩子。</span>
             </Reveal>
 
             <div className="fs-a-hold">
               {at(1) && (
                 <>
                   <Reveal kind="rise" duration={760} className="fs-a-l2 serif-cn">
-                    就是 <span className="fs-em">Moxie 验证过</span>的那条路——
+                    <span className="fs-em">Moxie</span> 只证明了这条路走得通——
                     <br />
-                    但用 <span className="fs-em">2026 的能力</span>，重做一遍。
+                    我们用<span className="fs-em">低成本的具身智能</span>，走得更远。
                   </Reveal>
                   <Reveal
                     kind="wipe-r"
@@ -78,9 +70,9 @@ export default function FirstStep({ step }: ChapterStepProps) {
                     delay={420}
                     className="fs-a-track"
                   >
-                    <span className="fs-track-node mono">MOXIE · 验证有效</span>
+                    <span className="fs-track-node mono">MOXIE · 证明可行</span>
                     <span className="fs-track-arrow display-en">→</span>
-                    <span className="fs-track-node is-now mono">2026 · 重做一遍</span>
+                    <span className="fs-track-node is-now mono">mech-claw · 走得更远</span>
                   </Reveal>
                 </>
               )}
@@ -94,7 +86,7 @@ export default function FirstStep({ step }: ChapterStepProps) {
         <div className="fs-b">
           <Reveal kind="fall" duration={560} className="fs-b-eyebrow mono">
             <span className="dot-accent" />
-            &nbsp;&nbsp;THE LEVERAGE POINT · 为什么是六岁
+            &nbsp;&nbsp;THE LEVERAGE POINT · 为什么是这个年龄
           </Reveal>
 
           <Reveal kind="fade" duration={760} className="fs-b-stage">
@@ -169,13 +161,13 @@ export default function FirstStep({ step }: ChapterStepProps) {
               「
             </span>
             <Reveal kind="blur" duration={980} delay={120} className="fs-c-ln">
-              一个会<span className="fs-em">陪你孩子长大</span>、
+              一个<span className="fs-em">陪孩子长大</span>、
             </Reveal>
             <Reveal kind="blur" duration={980} delay={620} className="fs-c-ln">
-              <span className="fs-em">永远记得他</span>、
+              <span className="fs-em">不会消失</span>、
             </Reveal>
             <Reveal kind="blur" duration={980} delay={1120} className="fs-c-ln">
-              <span className="fs-em">永远不会突然消失</span>的伙伴。
+              和孩子<span className="fs-em">彼此启迪、一起成长</span>的伙伴。
             </Reveal>
             <span className="fs-c-mark fs-c-mark--close" aria-hidden>
               」
@@ -183,7 +175,7 @@ export default function FirstStep({ step }: ChapterStepProps) {
           </div>
 
           <Reveal kind="rise" duration={760} delay={1700} className="fs-c-sig mono">
-            mech-claw　·　给六岁孩子的智能伙伴
+            mech-claw　·　给 5–10 岁孩子的智能伙伴
           </Reveal>
         </div>
       </SceneFade>
@@ -193,7 +185,7 @@ export default function FirstStep({ step }: ChapterStepProps) {
 
 /* ── 中心件 · 自绘"杠杆 + 支点" ──
  *  一根杠杆梁，支点精准卡在杠杆点（偏成年人侧）上 —— 用它表达
- *  "选六岁=精准打在认知形成的杠杆点"。
+ *  "选 5–10 岁=精准打在认知形成的杠杆点"。
  *  对照两端：
  *    左端 = 成年人（世界观定型、沉重，重块压住、纹丝不动）
  *    右端 = 孩子（正在形成、轻轻一点就被撬起，节点里被「铭刻」一道暖纹）
@@ -262,12 +254,21 @@ function Lever({ at }: { at: (n: number) => boolean }) {
           {/* 「写进/铭刻」：节点内一道暖色刻痕，step4 点亮 */}
           <path className="fs-child-mark" d="M996 250 L1024 250 M1010 236 L1010 264" />
           <text className="fs-end-label" x="1010" y="176">
-            六岁孩子
+            5–10 岁孩子
           </text>
           <text className="fs-end-sub" x="1010" y="312">
             认知正在形成
           </text>
         </g>
+      </g>
+
+      {/* 杠杆收益提示（固定，不随梁旋转）：孩子在长力臂 —— 小输入撬动大改变 */}
+      <g className="fs-leverage-hint">
+        <path className="fs-hint-arrow" d="M1090 146 C 1132 168, 1136 208, 1108 238" />
+        <circle className="fs-hint-dot" cx="1108" cy="238" r="4.5" />
+        <text className="fs-hint-cap" x="1100" y="130">
+          轻轻一点，撬动一生
+        </text>
       </g>
     </svg>
   );

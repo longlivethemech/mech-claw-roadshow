@@ -1,3 +1,4 @@
+import type { SyntheticEvent } from "react";
 import { Reveal } from "../../shared/Reveal";
 import { NumberTicker } from "../../shared/NumberTicker";
 import { SceneFade } from "../../shared/SceneFade";
@@ -5,6 +6,12 @@ import type { ChapterStepProps } from "../../registry/types";
 import "./WhyNow.css";
 
 const SPARKS = [0, 1, 2, 3, 4, 5, 6, 7];
+const ASSET = (n: string) => `${import.meta.env.BASE_URL}assets/${n}`;
+
+/** 头像加载失败时隐藏图、露出首字占位 */
+function hideImg(e: SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.classList.add("is-missing");
+}
 
 /**
  * 04 · why-now — 为什么是现在·2026（7 step / 4 幕）
@@ -61,10 +68,10 @@ export default function WhyNow({ step }: ChapterStepProps) {
                 className="wn-a-legend"
               >
                 <span className="wn-leg wn-leg--down">
-                  <span className="wn-leg-dash" /> 大模型 · 更便宜
+                  <span className="wn-leg-dash" /> 大模型 · 成本一路向下
                 </span>
                 <span className="wn-leg wn-leg--up">
-                  <span className="wn-leg-line" /> 世界模型 · VLA · 飞快长出
+                  <span className="wn-leg-line" /> 世界模型 · VLA · GPT-3.5 时刻将至
                 </span>
               </Reveal>
             )}
@@ -141,22 +148,16 @@ export default function WhyNow({ step }: ChapterStepProps) {
             >
               <span className="wn-c-us-tag mono">我们</span>
               <span className="wn-c-us-text serif-cn">
-                <NumberTicker
-                  to={300}
-                  from={0}
-                  decimals={0}
-                  duration={1000}
-                  delay={480}
-                  prefix="¥"
-                  className="wn-c-num display-en"
-                />{" "}
-                的相机，先把
-                <span className="wn-em">「会看 · 会动 · 能陪」</span>跑通
+                用<span className="wn-em">低千元级</span>的硬件，先把
+                <span className="wn-em">「会看 · 会动 · 会懂 · 能陪」</span>跑通
               </span>
             </Reveal>
           </div>
 
           <Reveal kind="fade" duration={700} delay={420} className="wn-flow-wrap">
+            <span className="wn-flow-cap mono">
+              举其中一个组件为例 · 让它「会看」：一颗 ¥300 相机就够
+            </span>
             <CameraFlow />
           </Reveal>
         </div>
@@ -189,9 +190,40 @@ export default function WhyNow({ step }: ChapterStepProps) {
                   <span className="wn-em">信任就永远没了。</span>
                 </p>
                 <div className="wn-quote-by">
-                  <span className="wn-quote-name serif-cn">王弢</span>
-                  <span className="wn-quote-meta mono">
-                    ROVAR X3 创始人　·　吴恩达的学生
+                  <span className="wn-endorser">
+                    <span className="wn-endorser-avatar">
+                      <span className="wn-endorser-ph" aria-hidden>王</span>
+                      <img
+                        className="wn-endorser-img"
+                        src={ASSET("wang-tao.jpg")}
+                        alt="王弢"
+                        onError={hideImg}
+                      />
+                    </span>
+                    <span className="wn-endorser-id">
+                      <span className="wn-quote-name serif-cn">王弢</span>
+                      <span className="wn-quote-meta mono">
+                        ROVAR X3 创始人 · 前·小鹏旗下机器人公司创新战略总监
+                      </span>
+                    </span>
+                  </span>
+                  <span className="wn-endorser-link mono" aria-hidden>师从</span>
+                  <span className="wn-endorser">
+                    <span className="wn-endorser-avatar">
+                      <span className="wn-endorser-ph" aria-hidden>吴</span>
+                      <img
+                        className="wn-endorser-img"
+                        src={ASSET("andrew-ng.jpg")}
+                        alt="吴恩达"
+                        onError={hideImg}
+                      />
+                    </span>
+                    <span className="wn-endorser-id">
+                      <span className="wn-quote-name serif-cn">吴恩达</span>
+                      <span className="wn-quote-meta mono">
+                        AI 先驱 · Google Brain / Coursera 创始人
+                      </span>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -208,9 +240,11 @@ export default function WhyNow({ step }: ChapterStepProps) {
  *   两条 path 用 stroke-dashoffset 自画；交叉点 lit 时点亮脉冲。
  * ───────────────────────────────────────────────────────────────────── */
 function CrossCurves({ lit }: { lit: boolean }) {
-  // viewBox 960×360；交叉点约在 (560, 196)
-  const COST = "M 70 86 C 250 110, 430 168, 560 196 S 830 252, 900 286";
-  const CAP = "M 70 300 C 250 286, 430 232, 560 196 S 830 116, 900 70";
+  // viewBox 960×360；交叉点固定在 (560, 196)。
+  // 端点对齐坐标轴：左端贴 y 轴(x=70)，右端贴 x 轴右沿(x=906，与 2028 刻度同列)，
+  // 成本线降到接近基线(y≈300)收束，避免虚线悬空、与轴对不上。
+  const COST = "M 70 80 C 250 104, 440 168, 560 196 S 820 270, 906 300";
+  const CAP = "M 70 300 C 250 286, 440 230, 560 196 S 820 104, 906 72";
   return (
     <svg
       className={`wn-chart ${lit ? "is-lit" : ""}`}

@@ -188,7 +188,7 @@
   transform: rotate(0deg);
   transition: transform 1100ms var(--ease-quart);
 }
-.fs-lever.is-tilted .fs-beam { transform: rotate(7deg); } /* 左沉(成年人) / 右起(孩子) */
+.fs-lever.is-tilted .fs-beam { transform: rotate(9.5deg); } /* 左沉(成年人) / 右起(孩子)；加大对比 */
 .fs-beam-bar {
   stroke: var(--text-2); stroke-width: 9; stroke-linecap: round;
   stroke-dasharray: 960; stroke-dashoffset: 960;
@@ -223,9 +223,33 @@
 }
 .fs-child .fs-end-label,
 .fs-child .fs-end-sub { opacity: 0; animation: fs-pop 600ms ease 480ms forwards; }
-/* 倾斜后孩子端被"撬起"：节点点亮 */
-.fs-lever.is-tilted .fs-child-node { fill: var(--accent-glow); }
-.fs-lever.is-tilted .fs-child .fs-end-label { fill: var(--accent); }
+/* 倾斜后孩子端被"撬起"：节点点亮（加亮 + 辉光，强化轻重对比） */
+.fs-lever.is-tilted .fs-child-node {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 16px var(--accent-glow));
+}
+.fs-lever.is-tilted .fs-child .fs-end-label {
+  fill: var(--accent); font-size: 28px;
+}
+
+/* ㉑ 杠杆收益提示：孩子在长力臂，小输入→大改变（is-tilted 后浮现） */
+.fs-leverage-hint { opacity: 0; }
+.fs-lever.is-tilted .fs-leverage-hint {
+  animation: fs-pop 720ms var(--ease-quart) 360ms forwards;
+}
+.fs-hint-arrow {
+  fill: none; stroke: var(--accent); stroke-width: 2;
+  stroke-linecap: round; stroke-dasharray: 3 6; opacity: 0.85;
+}
+.fs-hint-dot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+.fs-hint-cap {
+  fill: var(--accent); font-family: var(--font-display-cn);
+  font-weight: 700; font-size: 20px; letter-spacing: 0.04em;
+  text-anchor: middle;
+}
 
 /* 「写进/铭刻」：孩子节点内一道暖纹，step4 起点亮 */
 .fs-child-mark {

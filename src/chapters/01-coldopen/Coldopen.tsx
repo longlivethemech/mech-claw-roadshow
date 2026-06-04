@@ -1,5 +1,5 @@
+import type { SyntheticEvent } from "react";
 import { Reveal } from "../../shared/Reveal";
-import { NumberTicker } from "../../shared/NumberTicker";
 import { SceneFade } from "../../shared/SceneFade";
 import type { ChapterStepProps } from "../../registry/types";
 import "./Coldopen.css";
@@ -7,10 +7,23 @@ import "./Coldopen.css";
 const HERO = `${import.meta.env.BASE_URL}img/mechclaw-hero.png`;
 const EMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+/** 家喻户晓的虚拟伙伴 IP —— 作"先验概念"，放在"智能伙伴"出现之前 */
+const IP_ASSET = (n: string) => `${import.meta.env.BASE_URL}assets/${n}`;
+const IPS = [
+  { file: "ip-pikachu.png", name: "皮卡丘" },
+  { file: "ip-doraemon.png", name: "哆啦A梦" },
+  { file: "ip-digimon.png", name: "数码宝贝" },
+];
+
+/** 图片加载失败时隐藏图、露出占位框（可后补真图） */
+function hideOnError(e: SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.classList.add("is-missing");
+}
+
 /**
  * 01 · coldopen — 开场·定位（5 step / 4 幕）
  *   幕 A(step0-1) 生命火花 + 必然性时间轴 → 幕 B(step2) 取景框·决定
- *   → 幕 C(step3) 产品揭示 + 6 岁 → 幕 D(step4) slogan 锁版
+ *   → 幕 C(step3) 产品揭示 + 5–10 岁 → 幕 D(step4) slogan 锁版
  */
 export default function Coldopen({ step }: ChapterStepProps) {
   const at = (n: number) => step >= n;
@@ -50,6 +63,30 @@ export default function Coldopen({ step }: ChapterStepProps) {
             <br />
             和我们一起生活。
           </Reveal>
+
+          {/* ㉖ 先验概念：你早就认识这种「伙伴」（IP 小图，放在"智能伙伴"出现之前） */}
+          <Reveal kind="rise" duration={760} delay={680} className="co-ip-strip">
+            <span className="co-ip-lead mono">你早就认识这种「伙伴」</span>
+            <div className="co-ip-row">
+              {IPS.map((ip) => (
+                <span className="co-ip-item" key={ip.name}>
+                  <span className="co-ip-frame">
+                    <span className="co-ip-ph" aria-hidden>
+                      ?
+                    </span>
+                    <img
+                      className="co-ip-img"
+                      src={IP_ASSET(ip.file)}
+                      alt={ip.name}
+                      onError={hideOnError}
+                    />
+                  </span>
+                  <span className="co-ip-name">{ip.name}</span>
+                </span>
+              ))}
+            </div>
+          </Reveal>
+
           <div className="co-tl-wrap">
             {at(1) && (
               <>
@@ -120,16 +157,8 @@ export default function Coldopen({ step }: ChapterStepProps) {
               delay={140}
               className="co-c-h serif-cn"
             >
-              给{" "}
-              <NumberTicker
-                to={6}
-                from={0}
-                decimals={0}
-                duration={900}
-                delay={220}
-                className="co-num display-en"
-              />{" "}
-              岁孩子的<span className="co-em">智能伙伴</span>
+              给 <span className="co-num display-en">5–10</span> 岁孩子的
+              <span className="co-em">智能伙伴</span>
             </Reveal>
             <Reveal
               kind="rise"

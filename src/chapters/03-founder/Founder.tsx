@@ -36,18 +36,18 @@ export default function Founder({ step }: ChapterStepProps) {
           </Reveal>
 
           <Reveal kind="blur" duration={1050} className="fo-a-q serif-cn">
-            投资人最常问一句：
+            为什么，
             <br />
-            <span className="fo-em">为什么是你来做？</span>
+            <span className="fo-em">是他来做这件事？</span>
           </Reveal>
 
           <div className="fo-a-hold">
             {at(1) && (
               <>
                 <Reveal kind="rise" duration={720} className="fo-a-ans serif-cn">
-                  我们的领头人，
+                  我们的领头人，<span className="fo-em">张鹏翔</span>。
                   <br />
-                  走的是这样一条<span className="fo-em">路</span>。
+                  他走的是这样一条路。
                 </Reveal>
                 <Reveal
                   kind="wipe-r"
@@ -103,7 +103,7 @@ export default function Founder({ step }: ChapterStepProps) {
             <Reveal kind="wipe-r" duration={720} delay={340} className="fo-stat fo-stat--hero">
               <span className="fo-stat-fig display-en">
                 <NumberTicker
-                  to={1200}
+                  to={1500}
                   from={0}
                   decimals={0}
                   duration={1500}
@@ -131,7 +131,7 @@ export default function Founder({ step }: ChapterStepProps) {
             六个月前 · A TURN
           </Reveal>
           <Reveal kind="blur" duration={920} className="fo-d-l1 serif-cn">
-            他放下了顶尖物理学家的
+            他放下了物理学界一颗<span className="fo-em">新星</span>的
             <span className="fo-strike">轨道</span>。
           </Reveal>
 
@@ -140,7 +140,7 @@ export default function Founder({ step }: ChapterStepProps) {
               <Reveal kind="rise" duration={820} className="fo-d-l2 serif-cn">
                 来做<span className="fo-em">一件事</span>——
                 <br />
-                一个<span className="fo-em">陪孩子长大</span>的机器人。
+                一个<span className="fo-em">智能生命伙伴</span>。
               </Reveal>
             )}
           </div>
@@ -152,16 +152,16 @@ export default function Founder({ step }: ChapterStepProps) {
         <div className="fo-e">
           <div className="fo-e-glow" aria-hidden />
           <Reveal kind="fade" duration={700} className="fo-e-lead serif-cn">
-            一个<span className="fo-em">能做这些</span>的人，
+            他相信，
             <br />
-            偏要来做<span className="fo-em">这个</span>。
+            这是这个时代<span className="fo-em">最值得做的事</span>。
           </Reveal>
           <div className="fo-e-quote serif-cn">
             <Reveal kind="blur" duration={1000} delay={260} className="fo-e-ln">
-              这件事本身，
+              所以，
             </Reveal>
             <Reveal kind="blur" duration={1000} delay={760} className="fo-e-ln">
-              就是<span className="fo-em">答案</span>。
+              他<span className="fo-em">来了</span>。
             </Reveal>
           </div>
           <Reveal kind="rise" duration={720} delay={1300} className="fo-e-sig mono">
@@ -179,7 +179,7 @@ export default function Founder({ step }: ChapterStepProps) {
  */
 const NODES = [
   { x: 150, label: "人大附中", en: "RDFZ", sub: "北京", cls: "n0" },
-  { x: 520, label: "清华", en: "TSINGHUA", sub: "放弃保送 · 高考考入", cls: "n1" },
+  { x: 520, label: "清华", en: "TSINGHUA", sub: "计算机竞赛 · 保送", cls: "n1" },
   { x: 890, label: "MIT 直博", en: "MIT · EECS", sub: "直博", cls: "n2" },
   { x: 1290, label: "阿贡国家实验室", en: "ARGONNE", sub: "美国国家实验室", cls: "n3" },
 ];

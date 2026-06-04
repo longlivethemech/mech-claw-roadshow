@@ -64,7 +64,7 @@ export const CHAPTERS: ChapterDef[] = [
   },
   {
     id: "first-step",
-    title: "第一步·6岁",
+    title: "第一步·5–10岁",
     narrations: firstStepNarrations,
     Component: FirstStep,
   },

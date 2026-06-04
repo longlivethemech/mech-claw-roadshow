@@ -150,6 +150,9 @@ export default function Northstar({ step }: ChapterStepProps) {
               <Reveal kind="blur" duration={1050} delay={520} className="ns-tp-strong serif-cn">
                 是<span className="ns-em">吞吐量</span>。
               </Reveal>
+              <Reveal kind="rise" duration={780} delay={1120} className="ns-tp-gloss">
+                孩子毕业，不是离开——是我们交付完成。
+              </Reveal>
             </div>
           )}
         </div>

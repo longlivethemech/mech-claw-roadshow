@@ -36,7 +36,7 @@ const WALL: string[] = [
 
 /** 墓园四台 + 出身标签 */
 const TOMBS = [
-  { img: "anki_cozmo.png", name: "Anki", tag: "烧光 ¥1.8 亿", burn: true },
+  { img: "anki_cozmo.png", name: "Anki", tag: "烧光 $1.8 亿", burn: true },
   { img: "jibo.jpg", name: "Jibo", tag: "MIT 名门" },
   { img: "kuri.jpg", name: "Kuri", tag: "背靠博世" },
   { img: "moxie.webp", name: "Moxie", tag: "验证临床价值" },
@@ -44,18 +44,18 @@ const TOMBS = [
 
 /** 在售萌宠墙 */
 const PLUSH = [
-  { img: "eilik.jpg", name: "Eilik", tag: "$139 桌宠" },
-  { img: "moflin.jpg", name: "Moflin", tag: "无屏毛绒" },
-  { img: "ropet.jpg", name: "Ropet", tag: "毛绒触感" },
-  { img: "fuzozo.jpg", name: "芙崽", tag: "¥399 · 国内第一" },
-  { img: "bubblepal.jpg", name: "BubblePal", tag: "AI 挂坠 · 30万+" },
-  { img: "lovipeer.jpg", name: "loviPeer", tag: "¥699 平价" },
+  { img: "eilik.jpg", name: "Eilik", tag: "$139 · 情感桌宠" },
+  { img: "moflin.jpg", name: "Moflin", tag: "$429 · 无屏毛绒" },
+  { img: "ropet.jpg", name: "Ropet", tag: "$349 · 毛绒陪伴" },
+  { img: "fuzozo.jpg", name: "芙崽", tag: "¥399 · 国内首款" },
+  { img: "bubblepal.jpg", name: "BubblePal", tag: "¥399 · AI 挂坠" },
+  { img: "lovipeer.jpg", name: "loviPeer", tag: "¥699 · 平价陪伴" },
 ];
 
 /** 儿童线 */
 const KIDS = [
-  { img: "miko3.jpg", name: "Miko", tag: "会动+触屏 · $199+订阅", sub: "受儿童隐私监管审视" },
-  { img: "luka.png", name: "Luka", tag: "绘本阅读 · 百万+/台", sub: "窄而稳的另一条路" },
+  { img: "miko3.jpg", name: "Miko", tag: "会动+触屏 · $199+订阅", sub: "Moxie 的娱乐型后继" },
+  { img: "luka.png", name: "Luka", tag: "绘本阅读 · 百万+/台", sub: "绘本阅读切入，窄而稳" },
 ];
 
 /** Venn 四个维度 */
@@ -65,14 +65,16 @@ const AXES = ["会动", "懂孩子", "陪他长大", "活得久"];
  * 05 · market — 市场地图·我们站在哪里（10 step / 4 幕）
  *   A(0)  23 款缩略墙 + NumberTicker(23)
  *   B(1-4) 墓园：四台卡 → 全倒 → 死因三连 → 断云·变砖（FlickerNumber 活元素）
- *   C(5-7) 在售萌宠墙 → 固定动画批注 → 儿童线·留空位
+ *   C(5-6) 在售萌宠墙 → 固定动画批注
+ *   C2(7)  儿童线（独立一幕，萌宠墙淡出）· Miko/Luka/空位
  *   D(8-9) 四圆 Venn 自绘 → 中心交集点亮"我们要站的地方"
  */
 export default function Market({ step }: ChapterStepProps) {
   const at = (n: number) => step >= n;
   const sceneA = step <= 0;
   const sceneB = step >= 1 && step <= 4;
-  const sceneC = step >= 5 && step <= 7;
+  const sceneC = step >= 5 && step <= 6;
+  const sceneC2 = step === 7;
   const sceneD = step >= 8;
 
   return (
@@ -252,52 +254,59 @@ export default function Market({ step }: ChapterStepProps) {
             )}
           </div>
 
-          {/* step7 · 儿童线 */}
-          {at(7) && (
-            <Reveal kind="rise" duration={700} className="mk-kids">
-              <span className="mk-kids-eye mono">
-                03 · KIDS　儿童线 —— Moxie 验证了需求，留下一个空位
-              </span>
-              <div className="mk-kids-row">
-                {KIDS.map((k, i) => (
-                  <Reveal
-                    key={k.name}
-                    kind="scale"
-                    duration={560}
-                    delay={160 + i * 130}
-                    className="mk-kid-card"
-                  >
-                    <img className="mk-kid-img" src={A(k.img)} alt={k.name} />
-                    <div className="mk-kid-meta">
-                      <span className="mk-kid-name">
-                        {k.name}
-                        <span className="mk-kid-survive mono">幸存</span>
-                      </span>
-                      <span className="mk-kid-tag">{k.tag}</span>
-                      <span className="mk-kid-sub">{k.sub}</span>
-                    </div>
-                  </Reveal>
-                ))}
-                <Reveal
-                  kind="scale"
-                  duration={560}
-                  delay={420}
-                  className="mk-kid-card mk-kid-gap"
-                >
-                  <span className="mk-gap-mark" aria-hidden>
-                    ?
+          {/* 儿童线已拆为独立一幕 Scene C2（见下），不再压在萌宠墙下 */}
+        </div>
+      </SceneFade>
+
+      {/* ════════ Scene C2 · 儿童线（独立一幕，萌宠墙淡出） ════════ */}
+      <SceneFade active={sceneC2}>
+        <div className="mk-c2">
+          <Reveal kind="fall" duration={560} className="mk-sec-eye mono">
+            <span className="dot-accent" />
+            &nbsp;&nbsp;03 · KIDS　儿童线
+          </Reveal>
+          <Reveal kind="rise" duration={720} className="mk-c2-h serif-cn">
+            <span className="mk-em">Moxie</span> 验证了需求，
+            却留下一个<span className="mk-em">空位</span>
+          </Reveal>
+          <div className="mk-kids-row">
+            {KIDS.map((k, i) => (
+              <Reveal
+                key={k.name}
+                kind="scale"
+                duration={560}
+                delay={200 + i * 150}
+                className="mk-kid-card"
+              >
+                <img className="mk-kid-img" src={A(k.img)} alt={k.name} />
+                <div className="mk-kid-meta">
+                  <span className="mk-kid-name">
+                    {k.name}
+                    <span className="mk-kid-survive mono">幸存</span>
                   </span>
-                  <div className="mk-kid-meta">
-                    <span className="mk-kid-name mk-em">空位</span>
-                    <span className="mk-kid-tag">
-                      既会动 · 又懂孩子 · 还活得久
-                    </span>
-                    <span className="mk-kid-sub">没有一个答案</span>
-                  </div>
-                </Reveal>
+                  <span className="mk-kid-tag">{k.tag}</span>
+                  <span className="mk-kid-sub">{k.sub}</span>
+                </div>
+              </Reveal>
+            ))}
+            <Reveal
+              kind="scale"
+              duration={560}
+              delay={520}
+              className="mk-kid-card mk-kid-gap"
+            >
+              <span className="mk-gap-mark" aria-hidden>
+                ?
+              </span>
+              <div className="mk-kid-meta">
+                <span className="mk-kid-name mk-em">空位</span>
+                <span className="mk-kid-tag">
+                  既会动 · 又懂孩子 · 能陪他长大 · 还活得久
+                </span>
+                <span className="mk-kid-sub">没有一个答案</span>
               </div>
             </Reveal>
-          )}
+          </div>
         </div>
       </SceneFade>
 
@@ -316,7 +325,8 @@ export default function Market({ step }: ChapterStepProps) {
                 没有人做到：
                 <br />
                 既<span className="mk-em">会动</span>，又
-                <span className="mk-em">懂孩子</span>，还
+                <span className="mk-em">懂孩子</span>，能
+                <span className="mk-em">陪他长大</span>，还
                 <span className="mk-em">活得久</span>。
               </Reveal>
               {at(9) && (

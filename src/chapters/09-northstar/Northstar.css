@@ -307,6 +307,12 @@
   position: relative; font-size: 150px; font-weight: 700; color: var(--text);
   line-height: 1.04;
 }
+/* ㉔ 吞吐量释义：一行小字点破"毕业=交付，不是流失" */
+.ns-tp-gloss {
+  position: relative; margin-top: 14px;
+  font-family: var(--font-display-cn);
+  font-size: 26px; color: var(--text-2); letter-spacing: 0.04em;
+}
 
 /* ════════════════ Scene D · 北极星金句 → 品牌锁版 ════════════════ */
 .ns-d {

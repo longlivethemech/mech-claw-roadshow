@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { SyntheticEvent } from "react";
 import { Reveal } from "../../shared/Reveal";
 import { SceneFade } from "../../shared/SceneFade";
 import type { ChapterStepProps } from "../../registry/types";
@@ -6,6 +7,16 @@ import "./Vision.css";
 
 const COEXIST = `${import.meta.env.BASE_URL}img/coexist-city.png`;
 const FAREWELL = `${import.meta.env.BASE_URL}video/ai-farewell.mp4`;
+
+/** 愿景示意图（fauna 等身陪伴概念参考，可后补自制图） */
+const V_ASSET = (n: string) => `${import.meta.env.BASE_URL}assets/${n}`;
+const VISION_IMGS = [
+  { file: "fauna-work.jpg", cap: "你工作，它在桌边陪着" },
+  { file: "fauna-hand.jpg", cap: "和孩子等高，手牵手一起走" },
+];
+function hideVisionImg(e: SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.classList.add("is-missing");
+}
 
 /**
  * 02 · vision — 愿景·一件几乎必然发生的事（8 step / 5 幕）
@@ -146,9 +157,8 @@ export default function Vision({ step }: ChapterStepProps) {
 
           {at(5) && (
             <Reveal kind="rise" duration={760} delay={120} className="vi-c-foot">
-              就像<span className="vi-em">互联网</span>和
-              <span className="vi-em">智能手机</span>—— 是被一代
-              <span className="vi-em">数字原住民</span>，带进生活的。
+              每一次浪潮，都由一代把它
+              <span className="vi-em">视为理所当然</span>的原住民，带进生活。
             </Reveal>
           )}
         </div>
@@ -178,7 +188,32 @@ export default function Vision({ step }: ChapterStepProps) {
             <span className="vi-d-brand-name display-en">mech-claw</span>
             <span className="vi-d-brand-div" />
             <span className="vi-d-brand-tag mono">
-              为智能生命走进社会 · 打第一场前哨战
+              为智能生命走进社会 · 打第一场
+              <span className="vi-d-vanguard">前哨战</span>
+            </span>
+          </Reveal>
+
+          {/* ㉕ 愿景示意：等身陪伴的画面（fauna 概念参考 · 占位可换自制图） */}
+          <Reveal kind="rise" duration={820} delay={1500} className="vi-d-vision">
+            <span className="vi-d-vision-eyebrow mono">愿景示意 · 概念参考</span>
+            <div className="vi-d-vision-row">
+              {VISION_IMGS.map((v) => (
+                <figure className="vi-d-vfig" key={v.file}>
+                  <span className="vi-d-vframe">
+                    <span className="vi-d-vph" aria-hidden>愿景图占位</span>
+                    <img
+                      className="vi-d-vimg"
+                      src={V_ASSET(v.file)}
+                      alt={v.cap}
+                      onError={hideVisionImg}
+                    />
+                  </span>
+                  <figcaption className="vi-d-vcap">{v.cap}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <span className="vi-d-vision-note mono">
+              * 画面取自 fauna，仅作"等身陪伴"概念参考，非本品
             </span>
           </Reveal>
         </div>
@@ -267,7 +302,8 @@ function VideoProof({ active }: { active: boolean }) {
  * 中心可视化 · 自绘"接受度 S 曲线"
  *   - 主曲线用 stroke-dashoffset 自画：先平 → 后陡 → 再饱和
  *   - 横轴=一代人的时间，纵轴=接受度
- *   - lit=true 时点亮曲线上两个节点（互联网 / 智能手机=数字原住民带进生活），
+ *   - lit=true 时由左到右依次点亮 计算机 → 互联网 → 智能手机 → LLM 四个节点
+ *     （每一代都由把它视为理所当然的原住民带进生活），
  *     并延伸一段虚线指向"智能生命"（我们要做的下一程）。
  */
 function SCurve({ lit }: { lit: boolean }) {
@@ -310,8 +346,17 @@ function SCurve({ lit }: { lit: boolean }) {
       {/* 主曲线：stroke-dashoffset 自画 */}
       <path className="vi-curve" d={PATH} />
 
-      {/* 节点：互联网 / 智能手机（lit 后点亮） */}
+      {/* 节点：计算机 → 互联网 → 智能手机 → LLM（lit 后由左到右依次点亮） */}
       <g className={`vi-nodes ${lit ? "is-lit" : ""}`}>
+        {/* 计算机：曲线起步平段（最早一代） */}
+        <g className="vi-node vi-node-3">
+          <line className="vi-node-stem" x1="217" y1="368" x2="217" y2="300" />
+          <circle className="vi-node-halo" cx="217" cy="368" r="15" />
+          <circle className="vi-node-dot" cx="217" cy="368" r="6.5" />
+          <text className="vi-node-t" x="217" y="286">
+            计算机
+          </text>
+        </g>
         {/* 互联网：曲线陡升段起点附近 */}
         <g className="vi-node vi-node-1">
           <line className="vi-node-stem" x1="360" y1="320" x2="360" y2="246" />
@@ -328,6 +373,15 @@ function SCurve({ lit }: { lit: boolean }) {
           <circle className="vi-node-dot" cx="540" cy="110" r="6.5" />
           <text className="vi-node-t vi-node-t--below" x="540" y="208">
             智能手机
+          </text>
+        </g>
+        {/* LLM：接近饱和段（最近一代） */}
+        <g className="vi-node vi-node-4">
+          <line className="vi-node-stem" x1="640" y1="77" x2="640" y2="150" />
+          <circle className="vi-node-halo" cx="640" cy="77" r="15" />
+          <circle className="vi-node-dot" cx="640" cy="77" r="6.5" />
+          <text className="vi-node-t vi-node-t--below" x="640" y="168">
+            LLM
           </text>
         </g>
       </g>

@@ -216,6 +216,13 @@ export default function TechMoat({ step }: ChapterStepProps) {
               <Reveal kind="rise" duration={700} delay={420} className="tm-lib">
                 <LibraryGrowth />
               </Reveal>
+              <Reveal kind="fade" duration={780} delay={860} className="tm-teach-foot">
+                <span className="tm-teach-foot-tag mono">自学习的根基 · openclaw</span>
+                <span className="tm-teach-foot-t serif-cn">
+                  它会<span className="tm-em">记得</span>、会
+                  <span className="tm-em">成长</span>，越来越懂你的孩子
+                </span>
+              </Reveal>
             </div>
           )}
         </div>
