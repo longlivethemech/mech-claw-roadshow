@@ -11,8 +11,8 @@ const FAREWELL = `${import.meta.env.BASE_URL}video/ai-farewell.mp4`;
 /** 愿景示意图（fauna 等身陪伴概念参考，可后补自制图） */
 const V_ASSET = (n: string) => `${import.meta.env.BASE_URL}assets/${n}`;
 const VISION_IMGS = [
-  { file: "fauna-work.jpg", cap: "你工作，它在桌边陪着" },
-  { file: "fauna-hand.jpg", cap: "和孩子等高，手牵手一起走" },
+  { file: "fauna-work.png", cap: "你工作，它在桌边陪着" },
+  { file: "fauna-hand.png", cap: "和孩子等高，手牵手一起走" },
 ];
 function hideVisionImg(e: SyntheticEvent<HTMLImageElement>) {
   e.currentTarget.classList.add("is-missing");
@@ -92,7 +92,15 @@ export default function Vision({ step }: ChapterStepProps) {
           </Reveal>
 
           <Reveal kind="blur" duration={900} className="vi-b-claim serif-cn">
-            这个判断，<span className="vi-em">很难被反驳</span>。
+            这不是口号，<span className="vi-em">是越想越清楚的事</span>。
+          </Reveal>
+
+          {/* 现实例证：机器人进家庭不是空想，已是被认真投入的市场 */}
+          <Reveal kind="rise" duration={680} delay={420} className="vi-b-proof">
+            <span className="vi-b-proof-tag mono">不是空想</span>
+            <span className="vi-b-proof-t">
+              比如 <span className="vi-em">蔚蓝 BabyAlpha A3</span> ——「机器人走进家庭」，已经是有人认真在做的市场
+            </span>
           </Reveal>
 
           {/* 反方对照：反驳它=断言永不发生 */}

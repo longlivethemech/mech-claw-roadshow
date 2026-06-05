@@ -20,17 +20,27 @@ function hideOnError(e: SyntheticEvent<HTMLImageElement>) {
   e.currentTarget.classList.add("is-missing");
 }
 
+/** claw 概念图（团队制作中，2×2 占位，后补真图） */
+const CONCEPTS = [
+  "claw-concept-1.png",
+  "claw-concept-2.png",
+  "claw-concept-3.png",
+  "claw-concept-4.png",
+];
+
 /**
- * 01 · coldopen — 开场·定位（5 step / 4 幕）
+ * 01 · coldopen — 开场·定位（6 step / 5 幕）
  *   幕 A(step0-1) 生命火花 + 必然性时间轴 → 幕 B(step2) 取景框·决定
- *   → 幕 C(step3) 产品揭示 + 5–10 岁 → 幕 D(step4) slogan 锁版
+ *   → 幕 C(step3) 产品揭示 + 5–10 岁 → 幕 C2(step4) 概念图 2×2
+ *   → 幕 D(step5) slogan 锁版
  */
 export default function Coldopen({ step }: ChapterStepProps) {
   const at = (n: number) => step >= n;
   const sceneA = step <= 1;
   const sceneB = step === 2;
   const sceneC = step === 3;
-  const sceneD = step >= 4;
+  const sceneConcept = step === 4;
+  const sceneD = step >= 5;
 
   return (
     <div className="co-root">
@@ -166,9 +176,45 @@ export default function Coldopen({ step }: ChapterStepProps) {
               delay={360}
               className="co-c-sub"
             >
-              会走　·　会看　·　会陪他长大
+              会走　·　会看　·　会陪伴长大
             </Reveal>
           </div>
+        </div>
+      </SceneFade>
+
+      {/* ─── Scene C2 · 概念图展示（产品揭示后、slogan 前） ─── */}
+      <SceneFade active={sceneConcept}>
+        <div className="co-cc">
+          <Reveal kind="fall" duration={560} className="co-eyebrow mono">
+            <span className="dot-accent" />
+            &nbsp;&nbsp;CONCEPT · 我们正在打造它的样子
+          </Reveal>
+          <div className="co-cc-grid">
+            {CONCEPTS.map((file, i) => (
+              <Reveal
+                key={file}
+                kind="scale"
+                duration={620}
+                delay={180 + i * 130}
+                className="co-cc-cell"
+              >
+                <span className="co-cc-frame">
+                  <span className="co-cc-ph" aria-hidden>
+                    概念图占位 {i + 1}
+                  </span>
+                  <img
+                    className="co-cc-img"
+                    src={IP_ASSET(file)}
+                    alt={`claw 概念图 ${i + 1}`}
+                    onError={hideOnError}
+                  />
+                </span>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal kind="rise" duration={620} delay={760} className="co-cc-note mono">
+            概念设计 · 团队制作中 · 最终以实物为准
+          </Reveal>
         </div>
       </SceneFade>
 

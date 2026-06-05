@@ -87,7 +87,7 @@ export default function Northstar({ step }: ChapterStepProps) {
                 >
                   <span className="ns-shell-tag mono">是</span>
                   <span className="ns-shell-text serif-cn">
-                    那个<span className="ns-em">记得他 · 懂他 · 陪他长大</span>的灵魂
+                    那个<span className="ns-em">记得、懂、一路陪伴长大</span>的灵魂
                   </span>
                 </Reveal>
               </div>

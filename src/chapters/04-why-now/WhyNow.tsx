@@ -195,7 +195,7 @@ export default function WhyNow({ step }: ChapterStepProps) {
                       <span className="wn-endorser-ph" aria-hidden>王</span>
                       <img
                         className="wn-endorser-img"
-                        src={ASSET("wang-tao.jpg")}
+                        src={ASSET("wang-tao.png")}
                         alt="王弢"
                         onError={hideImg}
                       />

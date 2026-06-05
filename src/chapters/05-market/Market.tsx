@@ -59,7 +59,7 @@ const KIDS = [
 ];
 
 /** Venn 四个维度 */
-const AXES = ["会动", "懂孩子", "陪他长大", "活得久"];
+const AXES = ["会动", "懂孩子", "陪伴长大", "活得久"];
 
 /**
  * 05 · market — 市场地图·我们站在哪里（10 step / 4 幕）
@@ -301,7 +301,7 @@ export default function Market({ step }: ChapterStepProps) {
               <div className="mk-kid-meta">
                 <span className="mk-kid-name mk-em">空位</span>
                 <span className="mk-kid-tag">
-                  既会动 · 又懂孩子 · 能陪他长大 · 还活得久
+                  既会动 · 又懂孩子 · 能陪伴长大 · 还活得久
                 </span>
                 <span className="mk-kid-sub">没有一个答案</span>
               </div>
@@ -326,7 +326,7 @@ export default function Market({ step }: ChapterStepProps) {
                 <br />
                 既<span className="mk-em">会动</span>，又
                 <span className="mk-em">懂孩子</span>，能
-                <span className="mk-em">陪他长大</span>，还
+                <span className="mk-em">陪伴长大</span>，还
                 <span className="mk-em">活得久</span>。
               </Reveal>
               {at(9) && (
@@ -373,7 +373,7 @@ function CloudLink() {
 }
 
 /**
- * 自绘四圆 Venn —— 会动 / 懂孩子 / 陪他长大 / 活得久
+ * 自绘四圆 Venn —— 会动 / 懂孩子 / 陪伴长大 / 活得久
  * 四个交叠圆，圆周描边生长；中心四交集先空，lit=true 时点亮"我们在这"。
  */
 function Venn({ lit }: { lit: boolean }) {

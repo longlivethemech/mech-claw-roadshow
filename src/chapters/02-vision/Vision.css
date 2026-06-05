@@ -122,6 +122,19 @@
 }
 .vi-counter-quote { font-size: 38px; color: var(--text-2); }
 
+/* 现实例证 chip：家庭陪伴机器人已进客厅（支撑"不是口号"） */
+.vi-b-proof {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  justify-content: center; max-width: 1000px;
+}
+.vi-b-proof-tag {
+  flex: 0 0 auto;
+  font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--accent);
+  border-radius: 999px; padding: 4px 13px;
+}
+.vi-b-proof-t { font-size: 20px; color: var(--text-2); }
+
 /* 焦点反转：技术 → 接受度 */
 .vi-pivot {
   margin-top: 14px;
@@ -332,7 +345,7 @@
 .vi-d-vision-row { display: flex; gap: 28px; }
 .vi-d-vfig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .vi-d-vframe {
-  position: relative; width: 300px; height: 169px; /* 16:9 */
+  position: relative; width: 232px; height: 264px; /* 近 7:8，贴合等身陪伴竖图 */
   display: grid; place-items: center; overflow: hidden;
   border: 1px solid var(--rule); border-radius: 8px;
   background: var(--surface);

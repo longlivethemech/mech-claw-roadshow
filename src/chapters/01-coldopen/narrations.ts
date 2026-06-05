@@ -1,6 +1,6 @@
 import type { Narration } from "../../registry/types";
 
-/** 开场·定位 — 5 steps. Source: script.md §1 coldopen. */
+/** 开场·定位 — 6 steps. Source: script.md §1 coldopen. */
 export const narrations: Narration[] = [
   // step 0 — 活着的火花 + 判断
   "未来，一定会有一种'活的'机器人，和我们一起生活。",
@@ -9,7 +9,9 @@ export const narrations: Narration[] = [
   // step 2 — 决定造第一个伙伴
   "我们决定，为那一天，造第一个伙伴。",
   // step 3 — 产品揭示
-  "它是给 5 到 10 岁孩子的。会走，会看，会陪他长大。",
-  // step 4 — slogan
+  "它是给 5 到 10 岁孩子的。会走，会看，会陪伴长大。",
+  // step 4 — 概念图展示
+  "这是我们正在打造它的样子。",
+  // step 5 — slogan
   "你陪它长大，它陪你长大。",
 ];
