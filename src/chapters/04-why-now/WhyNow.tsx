@@ -68,10 +68,10 @@ export default function WhyNow({ step }: ChapterStepProps) {
                 className="wn-a-legend"
               >
                 <span className="wn-leg wn-leg--down">
-                  <span className="wn-leg-dash" /> 大模型 · 成本一路向下
+                  <span className="wn-leg-dash" /> 算力成本 · 指数下降（$/TOPS）
                 </span>
                 <span className="wn-leg wn-leg--up">
-                  <span className="wn-leg-line" /> 世界模型 · VLA · GPT-3.5 时刻将至
+                  <span className="wn-leg-line" /> 模型能力 · 指数上升
                 </span>
               </Reveal>
             )}
@@ -236,15 +236,50 @@ export default function WhyNow({ step }: ChapterStepProps) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 中心可视化 1 · 双曲线：成本↓ / 能力↑，在 2026 交叉（拐点）
- *   两条 path 用 stroke-dashoffset 自画；交叉点 lit 时点亮脉冲。
+ * 中心可视化 1 · 双曲线：算力成本（$/TOPS）指数↓ / 能力指数↑，交叉=拐点
+ *   两条曲线按指数函数生成（非线性）：成本指数衰减、能力指数增长；
+ *   交叉点由数值求解后点亮脉冲。两条 path 用 stroke-dashoffset 自画。
  * ───────────────────────────────────────────────────────────────────── */
 function CrossCurves({ lit }: { lit: boolean }) {
-  // viewBox 960×360；交叉点固定在 (560, 196)。
-  // 端点对齐坐标轴：左端贴 y 轴(x=70)，右端贴 x 轴右沿(x=906，与 2028 刻度同列)，
-  // 成本线降到接近基线(y≈300)收束，避免虚线悬空、与轴对不上。
-  const COST = "M 70 80 C 250 104, 440 168, 560 196 S 820 270, 906 300";
-  const CAP = "M 70 300 C 250 286, 440 230, 560 196 S 820 104, 906 72";
+  const X0 = 70;
+  const X1 = 906;
+  const Y_TOP = 66;
+  const Y_BOT = 300;
+  const W = X1 - X0;
+  const H = Y_BOT - Y_TOP;
+  const A_COST = 2.4; // 算力成本：指数衰减（先陡后缓）
+  const B_CAP = 3.6; // 能力：指数增长（先缓后陡）
+  const xAt = (f: number) => X0 + f * W;
+  // 成本高在左(顶) → 低在右(近基线)；能力低在左(底) → 高在右(顶)
+  const yCost = (f: number) =>
+    Y_TOP + (H * (1 - Math.exp(-A_COST * f))) / (1 - Math.exp(-A_COST));
+  const yCap = (f: number) =>
+    Y_BOT - (H * (Math.exp(B_CAP * f) - 1)) / (Math.exp(B_CAP) - 1);
+  const build = (fn: (f: number) => number) => {
+    const n = 64;
+    let d = "";
+    for (let i = 0; i <= n; i++) {
+      const f = i / n;
+      d += (i === 0 ? "M " : " L ") + xAt(f).toFixed(1) + " " + fn(f).toFixed(1);
+    }
+    return d;
+  };
+  const COST = build(yCost);
+  const CAP = build(yCap);
+  // 数值求交点
+  let fx = 0.5;
+  let prev = yCost(0) - yCap(0);
+  for (let i = 1; i <= 240; i++) {
+    const f = i / 240;
+    const cur = yCost(f) - yCap(f);
+    if (prev < 0 !== cur < 0) {
+      fx = (i - 0.5) / 240;
+      break;
+    }
+    prev = cur;
+  }
+  const cx = xAt(fx);
+  const cy = yCost(fx);
   return (
     <svg
       className={`wn-chart ${lit ? "is-lit" : ""}`}
@@ -254,35 +289,38 @@ function CrossCurves({ lit }: { lit: boolean }) {
       aria-hidden
     >
       {/* 轴 */}
-      <line className="wn-axis" x1="70" y1="40" x2="70" y2="320" />
-      <line className="wn-axis" x1="70" y1="320" x2="906" y2="320" />
+      <line className="wn-axis" x1={X0} y1="40" x2={X0} y2="320" />
+      <line className="wn-axis" x1={X0} y1="320" x2={X1} y2="320" />
       {/* 交叉处竖参考线 */}
-      <line className="wn-cross-guide" x1="560" y1="60" x2="560" y2="320" />
+      <line className="wn-cross-guide" x1={cx.toFixed(1)} y1="56" x2={cx.toFixed(1)} y2="320" />
 
-      {/* 成本↓ 曲线（虚线渐隐） */}
+      {/* 算力成本 指数↓（虚线渐隐） */}
       <path className="wn-curve wn-curve--cost" d={COST} />
-      {/* 能力↑ 曲线（实线，焦点色） */}
+      {/* 能力 指数↑（实线，焦点色） */}
       <path className="wn-curve wn-curve--cap" d={CAP} />
 
       {/* 轴端标签 */}
       <text className="wn-c-label wn-c-label--cost" x="86" y="76">
-        成本
+        算力成本
+      </text>
+      <text className="wn-axis-num mono" x="86" y="95" textAnchor="start">
+        $/TOPS
       </text>
       <text className="wn-c-label wn-c-label--cap" x="886" y="60">
         能力
       </text>
-      <text className="wn-axis-num mono" x="70" y="344">
+      <text className="wn-axis-num mono" x={X0} y="344">
         2019
       </text>
-      <text className="wn-axis-num mono" x="906" y="344">
+      <text className="wn-axis-num mono" x={X1} y="344">
         2028
       </text>
 
-      {/* 交叉点 · 拐点 */}
+      {/* 交叉点 · 拐点（数值求解） */}
       <g className="wn-cross">
-        <circle className="wn-cross-halo" cx="560" cy="196" r="22" />
-        <circle className="wn-cross-dot" cx="560" cy="196" r="7" />
-        <text className="wn-cross-label mono" x="560" y="158">
+        <circle className="wn-cross-halo" cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="22" />
+        <circle className="wn-cross-dot" cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="7" />
+        <text className="wn-cross-label mono" x={cx.toFixed(1)} y={(cy - 38).toFixed(1)}>
           拐点 · 2026
         </text>
       </g>

@@ -19,12 +19,13 @@ function hideVisionImg(e: SyntheticEvent<HTMLImageElement>) {
 }
 
 /**
- * 02 · vision — 愿景·一件几乎必然发生的事（8 step / 5 幕）
+ * 02 · vision — 愿景·一件几乎必然发生的事（9 step / 6 幕）
  *   A(step0-1) 共生情感底 + "像宝可梦那样的世界" → 叠 "我们赌这一天会来"
  *   B(step2-3) "难反驳"论断（反方对照）→ 焦点反转 "门槛不是技术，是接受度"
  *   C(step4-5) 自画接受度 S 曲线（一代人慢慢长出来）→ 点亮 互联网/智能手机 节点
  *   D(step6)   tight 词替换锁版 "数字原住民 → 智能生命原住民"
- *   E(step7)   视频证据 —— 孩子已和 AI 朋友告别，接受已发生【视频位】
+ *   N(step7)   养育特写 —— "制造 → 养育" 大字反转 + openclaw 钩子
+ *   E(step8)   视频证据 —— 孩子已和 AI 朋友告别，接受已发生【视频位】
  */
 export default function Vision({ step }: ChapterStepProps) {
   const at = (n: number) => step >= n;
@@ -32,7 +33,8 @@ export default function Vision({ step }: ChapterStepProps) {
   const sceneB = step >= 2 && step <= 3;
   const sceneC = step >= 4 && step <= 5;
   const sceneD = step === 6;
-  const sceneE = step >= 7;
+  const sceneNurture = step === 7;
+  const sceneE = step >= 8;
 
   return (
     <div className="vi-root">
@@ -177,7 +179,7 @@ export default function Vision({ step }: ChapterStepProps) {
         <div className="vi-d">
           <div className="vi-d-glow" aria-hidden />
           <Reveal kind="fade" duration={640} className="vi-d-lead">
-            我们要培育的，是第一代——
+            我们要养育的，是第一代——
           </Reveal>
           <div className="vi-d-swap serif-cn">
             {/* 旧词收紧淡出 */}
@@ -223,6 +225,32 @@ export default function Vision({ step }: ChapterStepProps) {
             <span className="vi-d-vision-note mono">
               * 画面取自 fauna，仅作"等身陪伴"概念参考，非本品
             </span>
+          </Reveal>
+        </div>
+      </SceneFade>
+
+      {/* ═══════════ Scene N · 养育特写："制造 → 养育" ═══════════ */}
+      <SceneFade active={sceneNurture}>
+        <div className="vi-n">
+          <div className="vi-n-glow" aria-hidden />
+          <Reveal kind="fade" duration={620} className="vi-n-lead">
+            能与人长期共生的伙伴——
+          </Reveal>
+          {/* 大字反转：制造 收紧淡出 → 养育 锁版（同 Scene D 的 tight 词汇） */}
+          <div className="vi-n-swap serif-cn">
+            <span className="vi-n-old">「制造」</span>
+            <Reveal kind="tight" duration={1100} delay={3460} className="vi-n-new">
+              「<span className="vi-em">养育</span>」
+            </Reveal>
+          </div>
+          <Reveal kind="rise" duration={760} delay={4160} className="vi-n-sub serif-cn">
+            不是被制造出来的——是被<span className="vi-em">养育</span>出来的。
+            <br />
+            放进真实世界，在关系里、在时间里，慢慢长成「它自己」。
+          </Reveal>
+          <Reveal kind="rise" duration={720} delay={4460} className="vi-n-hook mono">
+            <span className="dot-accent" />
+            &nbsp;&nbsp;openclaw · 你陪它的每一天，它都记得、都在长大
           </Reveal>
         </div>
       </SceneFade>
@@ -307,17 +335,42 @@ function VideoProof({ active }: { active: boolean }) {
 }
 
 /**
- * 中心可视化 · 自绘"接受度 S 曲线"
- *   - 主曲线用 stroke-dashoffset 自画：先平 → 后陡 → 再饱和
- *   - 横轴=一代人的时间，纵轴=接受度
- *   - lit=true 时由左到右依次点亮 计算机 → 互联网 → 智能手机 → LLM 四个节点
- *     （每一代都由把它视为理所当然的原住民带进生活），
- *     并延伸一段虚线指向"智能生命"（我们要做的下一程）。
+ * 中心可视化 · 自绘"5 条接受度 Sigmoid 曲线"
+ *   横轴 = 时间 / 年代，纵轴 = 接受度（0 → 1）。
+ *   计算机 → 互联网 → 智能手机 → LLM → 数字生命，同一斜率，沿时间依次右移；
+ *   每条都从 0 长到 1。数字生命 = 我们要赌的下一程（accent 高亮）。
+ *   lit=true 时由左到右依次自画点亮。
  */
 function SCurve({ lit }: { lit: boolean }) {
-  // 视口 0..960 × 0..420。S 曲线 path（先平后陡再饱和）。
-  const PATH =
-    "M 70 372 C 250 372 300 366 360 320 C 430 266 470 150 540 110 C 600 76 660 70 800 66";
+  const X0 = 92;
+  const X1 = 904;
+  const Y_TOP = 70; // 接受度 = 1
+  const Y_BOT = 360; // 接受度 = 0
+  const W = X1 - X0;
+  const H = Y_BOT - Y_TOP;
+  const K = 26; // 同一斜率
+  const waves = [
+    { name: "计算机", era: "1970s", c: 0.12, hot: false },
+    { name: "互联网", era: "1990s", c: 0.3, hot: false },
+    { name: "智能手机", era: "2007", c: 0.48, hot: false },
+    { name: "LLM", era: "2020s", c: 0.66, hot: false },
+    { name: "数字生命", era: "未来", c: 0.84, hot: true },
+  ];
+  const sig = (f: number, c: number) => 1 / (1 + Math.exp(-K * (f - c)));
+  const xAt = (f: number) => X0 + f * W;
+  const yAt = (f: number, c: number) => Y_BOT - sig(f, c) * H;
+  const pathFor = (c: number) => {
+    const fa = Math.max(0, c - 0.17);
+    const fb = Math.min(1, c + 0.17);
+    const n = 32;
+    let d = "";
+    for (let i = 0; i <= n; i++) {
+      const f = fa + ((fb - fa) * i) / n;
+      d += (i === 0 ? "M " : " L ") + xAt(f).toFixed(1) + " " + yAt(f, c).toFixed(1);
+    }
+    return d;
+  };
+
   return (
     <svg
       className="vi-svg"
@@ -326,85 +379,56 @@ function SCurve({ lit }: { lit: boolean }) {
       height={440}
       aria-hidden
     >
-      {/* 网格 + 轴 */}
+      {/* 轴 */}
       <g className="vi-grid">
-        <line x1="70" y1="60" x2="70" y2="384" />
-        <line x1="70" y1="384" x2="838" y2="384" />
+        <line x1={X0} y1="46" x2={X0} y2={Y_BOT} />
+        <line x1={X0} y1={Y_BOT} x2={X1} y2={Y_BOT} />
       </g>
-      {/* 轴标签 */}
-      <text className="vi-axis-y" x="58" y="70">
-        接受度
+      <text className="vi-axis-y" x={X0 - 12} y={Y_TOP + 6}>
+        接受度 1
       </text>
-      <text className="vi-axis-x" x="838" y="408">
-        一代人的时间 →
+      <text className="vi-axis-y" x={X0 - 12} y={Y_BOT}>
+        0
       </text>
-
-      {/* 饱和参照线（"成为空气"） */}
-      <line className="vi-asymptote" x1="70" y1="66" x2="838" y2="66" />
-      <text className="vi-asymptote-t" x="828" y="56">
-        成为空气
+      <text className="vi-axis-x" x={X1} y={Y_BOT + 46}>
+        时间 / 年代 →
       </text>
 
-      {/* 曲线下淡填充（随曲线生长，柔化） */}
-      <path
-        className="vi-area"
-        d={`${PATH} L 800 384 L 70 384 Z`}
-      />
+      {/* 接受度饱和参照线（=1：成为空气） */}
+      <line className="vi-asymptote" x1={X0} y1={Y_TOP} x2={X1} y2={Y_TOP} />
 
-      {/* 主曲线：stroke-dashoffset 自画 */}
-      <path className="vi-curve" d={PATH} />
-
-      {/* 节点：计算机 → 互联网 → 智能手机 → LLM（lit 后由左到右依次点亮） */}
-      <g className={`vi-nodes ${lit ? "is-lit" : ""}`}>
-        {/* 计算机：曲线起步平段（最早一代） */}
-        <g className="vi-node vi-node-3">
-          <line className="vi-node-stem" x1="217" y1="368" x2="217" y2="300" />
-          <circle className="vi-node-halo" cx="217" cy="368" r="15" />
-          <circle className="vi-node-dot" cx="217" cy="368" r="6.5" />
-          <text className="vi-node-t" x="217" y="286">
-            计算机
-          </text>
-        </g>
-        {/* 互联网：曲线陡升段起点附近 */}
-        <g className="vi-node vi-node-1">
-          <line className="vi-node-stem" x1="360" y1="320" x2="360" y2="246" />
-          <circle className="vi-node-halo" cx="360" cy="320" r="15" />
-          <circle className="vi-node-dot" cx="360" cy="320" r="6.5" />
-          <text className="vi-node-t" x="360" y="232">
-            互联网
-          </text>
-        </g>
-        {/* 智能手机：陡升段中段 */}
-        <g className="vi-node vi-node-2">
-          <line className="vi-node-stem" x1="540" y1="110" x2="540" y2="190" />
-          <circle className="vi-node-halo" cx="540" cy="110" r="15" />
-          <circle className="vi-node-dot" cx="540" cy="110" r="6.5" />
-          <text className="vi-node-t vi-node-t--below" x="540" y="208">
-            智能手机
-          </text>
-        </g>
-        {/* LLM：接近饱和段（最近一代） */}
-        <g className="vi-node vi-node-4">
-          <line className="vi-node-stem" x1="640" y1="77" x2="640" y2="150" />
-          <circle className="vi-node-halo" cx="640" cy="77" r="15" />
-          <circle className="vi-node-dot" cx="640" cy="77" r="6.5" />
-          <text className="vi-node-t vi-node-t--below" x="640" y="168">
-            LLM
-          </text>
-        </g>
-      </g>
-
-      {/* 延伸：指向"智能生命"（我们要走的下一程，虚线 + 端点脉冲） */}
-      <g className={`vi-extend ${lit ? "is-lit" : ""}`}>
-        <path
-          className="vi-extend-line"
-          d="M 800 66 C 856 64 900 62 932 60"
-        />
-        <circle className="vi-extend-halo" cx="932" cy="60" r="13" />
-        <circle className="vi-extend-dot" cx="932" cy="60" r="5.5" />
-        <text className="vi-extend-t" x="932" y="44">
-          智能生命
-        </text>
+      {/* 5 条 Sigmoid 接受度曲线 */}
+      <g className={`vi-waves ${lit ? "is-lit" : ""}`}>
+        {waves.map((w, i) => {
+          const satF = Math.min(1, w.c + 0.12);
+          const isLast = i === waves.length - 1;
+          return (
+            <g
+              key={w.name}
+              className={`vi-wave ${w.hot ? "is-hot" : ""}`}
+              style={{ ["--wd" as string]: `${i * 260}ms` }}
+            >
+              <path className="vi-wave-line" d={pathFor(w.c)} />
+              <circle
+                className="vi-wave-dot"
+                cx={xAt(satF)}
+                cy={yAt(satF, w.c)}
+                r={w.hot ? 6 : 4.5}
+              />
+              <text
+                className="vi-wave-label"
+                x={xAt(satF)}
+                y={Y_TOP - 12}
+                textAnchor={isLast ? "end" : "middle"}
+              >
+                {w.name}
+              </text>
+              <text className="vi-wave-era" x={xAt(w.c)} y={Y_BOT + 24}>
+                {w.era}
+              </text>
+            </g>
+          );
+        })}
       </g>
     </svg>
   );

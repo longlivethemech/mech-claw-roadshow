@@ -220,7 +220,7 @@ export default function TechMoat({ step }: ChapterStepProps) {
                 <span className="tm-teach-foot-tag mono">自学习的根基 · openclaw</span>
                 <span className="tm-teach-foot-t serif-cn">
                   它会<span className="tm-em">记得</span>、会
-                  <span className="tm-em">成长</span>，越来越懂你的孩子
+                  <span className="tm-em">成长</span>，越养越懂你的孩子
                 </span>
               </Reveal>
             </div>
