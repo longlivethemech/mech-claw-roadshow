@@ -1,6 +1,6 @@
 import type { Narration } from "../../registry/types";
 export const narrations: Narration[] = [
-  "这个赛道，我们认真扫过。二十三款代表机型。",
+  "这个赛道，我们认真扫过。二十五款代表机型。",
   "先看墓园。Anki 烧光一亿八，Jibo 出身 MIT，Kuri 背靠博世，Moxie 验证了临床价值。",
   "四个，全倒了。钱、名校、技术天才，都没能救它们。",
   "死因高度一致：现金流断了，缺一个长期用下去的理由，太依赖云。",

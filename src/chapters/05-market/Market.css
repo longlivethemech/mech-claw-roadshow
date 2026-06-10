@@ -218,8 +218,8 @@
   font-size: 22px; color: var(--text-2); letter-spacing: 0.18em;
 }
 .mk-plush {
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: 18px; width: 100%; max-width: 1340px;
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 18px; width: 100%; max-width: 1480px;
 }
 .mk-pl-card {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -233,6 +233,7 @@
 }
 .mk-pl-name { font-size: 18px; color: var(--text); font-family: var(--font-display-cn); font-weight: 700; }
 .mk-pl-tag { font-size: 11px; color: var(--text-mute); letter-spacing: 0.02em; }
+.mk-pl-sub { font-size: 10px; color: var(--accent); letter-spacing: 0.02em; }
 
 .mk-anno-wrap { min-height: 60px; display: grid; place-items: center; width: 100%; }
 .mk-anno {

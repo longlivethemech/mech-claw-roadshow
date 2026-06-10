@@ -7,7 +7,7 @@ import "./Market.css";
 
 const A = (n: string) => `${import.meta.env.BASE_URL}assets/${n}`;
 
-/** 23 款代表机型缩略墙（逐一确认过扩展名） */
+/** 25 款代表机型缩略墙（逐一确认过扩展名） */
 const WALL: string[] = [
   "jibo.jpg",
   "anki_cozmo.png",
@@ -32,6 +32,8 @@ const WALL: string[] = [
   "elliq.png",
   "enabot_ebox.jpg",
   "tcl_aime.jpg",
+  "duoqi.jpg",
+  "amoo.jpg",
 ];
 
 /** 墓园四台 + 出身标签 */
@@ -42,20 +44,22 @@ const TOMBS = [
   { img: "moxie.webp", name: "Moxie", tag: "验证临床价值" },
 ];
 
-/** 在售萌宠墙 */
-const PLUSH = [
+/** 在售萌宠墙（+ Amoo：会走的毛绒陪伴机，2026 新入场，作对照） */
+const PLUSH: { img: string; name: string; tag: string; sub?: string }[] = [
   { img: "eilik.jpg", name: "Eilik", tag: "$139 · 情感桌宠" },
   { img: "moflin.jpg", name: "Moflin", tag: "$429 · 无屏毛绒" },
   { img: "ropet.jpg", name: "Ropet", tag: "$349 · 毛绒陪伴" },
   { img: "fuzozo.jpg", name: "芙崽", tag: "¥399 · 国内首款" },
   { img: "bubblepal.jpg", name: "BubblePal", tag: "¥399 · AI 挂坠" },
   { img: "lovipeer.jpg", name: "loviPeer", tag: "¥699 · 平价陪伴" },
+  { img: "amoo.jpg", name: "Amoo·青心意创", tag: "双足会走 · 自主寻人", sub: "高端 · 2026 新入场" },
 ];
 
-/** 儿童线 */
-const KIDS = [
+/** 儿童线（+ 多奇：2025 新入场的儿童 AI 英语伴学，但桌面不会动） */
+const KIDS: { img: string; name: string; tag: string; sub: string; badge?: string }[] = [
   { img: "miko3.jpg", name: "Miko", tag: "会动+触屏 · $199+订阅", sub: "Moxie 的娱乐型后继" },
   { img: "luka.png", name: "Luka", tag: "绘本阅读 · 百万+/台", sub: "绘本阅读切入，窄而稳" },
+  { img: "duoqi.jpg", name: "多奇", tag: "儿童英语伴学", sub: "桌面不会动 · 有道班底（包塔）", badge: "新入场" },
 ];
 
 /** Venn 四个维度 */
@@ -89,7 +93,7 @@ export default function Market({ step }: ChapterStepProps) {
       <SceneFade active={sceneA}>
         <div className="mk-a">
           <Reveal kind="fall" duration={600} className="mk-a-eye mono">
-            MARKET MAP · 23 UNITS SCANNED
+            MARKET MAP · 25 UNITS SCANNED
           </Reveal>
           <div className="mk-wall" aria-hidden>
             {WALL.map((src, i) => (
@@ -108,7 +112,7 @@ export default function Market({ step }: ChapterStepProps) {
             </span>
             <span className="mk-a-sub">
               <NumberTicker
-                to={23}
+                to={25}
                 from={0}
                 decimals={0}
                 duration={1100}
@@ -236,6 +240,7 @@ export default function Market({ step }: ChapterStepProps) {
                 <img className="mk-pl-img" src={A(p.img)} alt={p.name} />
                 <span className="mk-pl-name">{p.name}</span>
                 <span className="mk-pl-tag mono">{p.tag}</span>
+                {p.sub && <span className="mk-pl-sub mono">{p.sub}</span>}
               </Reveal>
             ))}
           </div>
@@ -282,7 +287,7 @@ export default function Market({ step }: ChapterStepProps) {
                 <div className="mk-kid-meta">
                   <span className="mk-kid-name">
                     {k.name}
-                    <span className="mk-kid-survive mono">幸存</span>
+                    <span className="mk-kid-survive mono">{k.badge ?? "幸存"}</span>
                   </span>
                   <span className="mk-kid-tag">{k.tag}</span>
                   <span className="mk-kid-sub">{k.sub}</span>
